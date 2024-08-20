@@ -2,16 +2,16 @@ import React from "react";
 
 const Navbar = () => {
   return (
-    <div className="container mx-auto">
-      <div className=" border-black flex justify-between px-5">
-      <div className=" flex items-center justify-center">PrajaGamer</div>
-      <div className="p-2 gap-4 bg-yellow-300">
-       <button className="px-2">Beranda</button>
-       <button className="px-2">Tentang Kami</button>
-       <button className="px-2">Info Pendaftaran</button>
-       <button className="px-2">Daftar Magang</button>
+    <div className="container mx-auto bg-white">
+      <div className=" py-5 flex justify-between items-center px-20 border-b-2 shadow-lg">
+      <div className=" text-[#D24545] font-bold text-2xl">PRAJAGAMER</div>
+      <div className=" gap-20 text-xl  ">
+       <button className="px-5 text-[#D24545] font-bold">Beranda</button>
+       <button className="px-5 text-[#919191]">Tentang Kami</button>
+       <button className="px-5 text-[#919191]">Info Pendaftaran</button>
+       <button className="px-5 text-[#919191]">Daftar Magang</button>
       </div>
-      <button className=" p-2 bg-[#D24545] rounded-sm">Masuk</button>
+      <button className=" px-8 py-2 bg-[#D24545] text-xl rounded-lg text-white font-bold">Masuk</button>
     </div>
     </div>
   );
