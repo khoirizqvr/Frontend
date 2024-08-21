@@ -8,7 +8,7 @@ function Tentang() {
         <div>Tentang Disdukcapil</div>
         <div className="text-[#D24545]">Kota Semarang</div>
       </div>
-      <div className="flex justify-center items-center gap-10 px-20">
+      <div className="flex justify-center items-start gap-20 px-20">
       <div className="text-justify pt-10 text-2xl">
         Dinas Kependudukan dan Pencatatan Sipil (Disdukcapil) Kota Semarang
         merupakan salah satu Organisasi Perangkat Daerah Kota Semarang yang
@@ -18,7 +18,7 @@ function Tentang() {
         pembantuan, memastikan pelayanan kepada masyarakat dalam hal
         administrasi kependudukan berjalan efektif dan sesuai ketentuan.
       </div>
-      <img src={Kantor} alt="" className="w-full" />
+      <img src={Kantor} alt="" className="" />
       </div>
       
     </div>
