@@ -5,6 +5,9 @@ import Login from "./Pages/login";
 import Register from "./Pages/Register";
 import { createBrowserRouter,RouterProvider } from "react-router-dom";
 import "./index.css";
+import InfoMitra from "./Pages/infoMitra";
+import ProfileMitra from "./Components/profileMitra";
+
 
 export default function App() {
   const router = createBrowserRouter([
@@ -20,6 +23,15 @@ export default function App() {
       path: "register",
       element: <Register />,
     },
+    {
+      path: "mitra",
+      element: <InfoMitra />,
+    },
+    {
+      path: "profileMitra",
+      element: <ProfileMitra />,
+    },
+
     // {
     //   path: "/",
     //   element: <Beranda/>,
