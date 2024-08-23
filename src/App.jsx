@@ -5,6 +5,9 @@ import Login from "./Pages/login";
 import Register from "./Pages/Register";
 import { createBrowserRouter,RouterProvider } from "react-router-dom";
 import "./index.css";
+import InfoMitra from "./Pages/infoMitra";
+import ProfileMitra from "./Components/profileMitra";
+
 import FormPendaftaran1 from "./Pages/FormPendaftaran1";
 import FormPendaftaran2 from "./Pages/FormPendaftaran2";
 import DaftarMagang from "./Pages/DaftarMagang";
@@ -23,6 +26,15 @@ export default function App() {
       path: "register",
       element: <Register />,
     },
+    {
+      path: "mitra",
+      element: <InfoMitra />,
+    },
+    {
+      path: "profileMitra",
+      element: <ProfileMitra />,
+    },
+
     {
       path: "daftarmagang",
       element: <DaftarMagang />,
