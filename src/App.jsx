@@ -8,6 +8,9 @@ import "./index.css";
 import InfoMitra from "./Pages/infoMitra";
 import ProfileMitra from "./Components/profileMitra";
 
+import FormPendaftaran1 from "./Pages/FormPendaftaran1";
+import FormPendaftaran2 from "./Pages/FormPendaftaran2";
+import DaftarMagang from "./Pages/DaftarMagang";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -32,6 +35,18 @@ export default function App() {
       element: <ProfileMitra />,
     },
 
+    {
+      path: "daftarmagang",
+      element: <DaftarMagang />,
+    },
+    {
+      path: "formpendaftaran1",
+      element: <FormPendaftaran1 />,
+    },
+    {
+      path: "formpendaftaran2",
+      element: <FormPendaftaran2 />,
+    },
     // {
     //   path: "/",
     //   element: <Beranda/>,
