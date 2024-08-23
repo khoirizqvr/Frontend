@@ -49,7 +49,7 @@ function FormPendaftaran2() {
                 </div>
                 <p className="text-gray-400 text-xs mt-2">
                   Unggah dalam format PDF dengan ukuran maksimal 5 MB.
-                </p>
+                </p>.
               </div>
 
               {/* Curriculum Vitae */}
