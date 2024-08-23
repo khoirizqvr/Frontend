@@ -5,6 +5,7 @@ import Logo from "../assets/Pictures/logodisdukcapil.png";
 import Beranda1 from "../assets/Pictures/beranda.svg";
 import fotoBeranda from "../assets/Pictures/fotoberanda.svg";
 import Footer from "../Components/Footer";
+import Mitra from "../Components/mitra";
 
 const Beranda = () => {
   return (
@@ -44,7 +45,10 @@ const Beranda = () => {
             <span className="text-[#FFF382]">Mahasiswa</span> yang Sedang
             Mencari <span className="text-[#FFF382]">Pengalaman </span>Bekerja
           </p>
-          <p className="text-xl text-white py-3"> Segera Daftarkan dirimu sekarang!</p>
+          <p className="text-xl text-white py-3">
+            {" "}
+            Segera Daftarkan dirimu sekarang!
+          </p>
           <div className="flex justify-center">
             <button className="mt-5 bg-white text-[#D24545] w-[400px] py-2 px-20 text-2xl font-semibold rounded-xl border-[#D24545] shadow-xl">
               Daftar Magang
@@ -52,7 +56,8 @@ const Beranda = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Mitra />
+      <Footer />
     </div>
   );
 };

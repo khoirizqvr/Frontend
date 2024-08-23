@@ -189,47 +189,62 @@ const Register = () => {
             </div>
 
             {/* Upload Section */}
-            <div className="space-y-4">
-              <div className="mb-4">
-                <label
-                  htmlFor="uploadFoto"
-                  className="block text-gray-700 text-left"
-                >
-                  Upload Foto
-                </label>
-                <input
-                  type="file"
-                  id="uploadFoto"
-                  className="p-2.5 mt-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#D24545]"
-                />
+            <div className="space-y-6">
+              {/* Upload Foto */}
+              <div className="border rounded p-4 mb-4">
+                <label className="font-semibold block mb-2">Upload Foto</label>
+                <div className="flex items-center">
+                  <label className="bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-l cursor-pointer hover:bg-gray-300">
+                    Choose File
+                    <input type="file" className="hidden" id="uploadFoto" />
+                  </label>
+                  <span className="bg-white text-gray-500 py-2 px-4 border border-l-0 rounded-r flex-1">
+                    Upload Foto
+                  </span>
+                </div>
+                <p className="text-gray-400 text-xs mt-2">
+                  Unggah dalam format JPG atau PNG dengan ukuran maksimal 5 MB.
+                </p>
               </div>
 
-              <div className="mb-4">
-                <label
-                  htmlFor="uploadCV"
-                  className="block text-gray-700 text-left"
-                >
-                  Upload CV
-                </label>
-                <input
-                  type="file"
-                  id="uploadCV"
-                  className="p-2.5 mt-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#D24545]"
-                />
+              {/* Upload CV */}
+              <div className="border rounded p-4 mb-4">
+                <label className="font-semibold block mb-2">Upload CV</label>
+                <div className="flex items-center">
+                  <label className="bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-l cursor-pointer hover:bg-gray-300">
+                    Choose File
+                    <input type="file" className="hidden" id="uploadCV" />
+                  </label>
+                  <span className="bg-white text-gray-500 py-2 px-4 border border-l-0 rounded-r flex-1">
+                    Upload CV
+                  </span>
+                </div>
+                <p className="text-gray-400 text-xs mt-2">
+                  Unggah dalam format PDF dengan ukuran maksimal 5 MB.
+                </p>
               </div>
 
-              <div className="mb-4">
-                <label
-                  htmlFor="uploadTranskrip"
-                  className="block text-gray-700 text-left"
-                >
+              {/* Upload Transkrip Nilai */}
+              <div className="border rounded p-4 mb-4">
+                <label className="font-semibold block mb-2">
                   Upload Transkrip Nilai
                 </label>
-                <input
-                  type="file"
-                  id="uploadTranskrip"
-                  className="p-2.5 mt-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#D24545]"
-                />
+                <div className="flex items-center">
+                  <label className="bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-l cursor-pointer hover:bg-gray-300">
+                    Choose File
+                    <input
+                      type="file"
+                      className="hidden"
+                      id="uploadTranskrip"
+                    />
+                  </label>
+                  <span className="bg-white text-gray-500 py-2 px-4 border border-l-0 rounded-r flex-1">
+                    Upload Transkrip
+                  </span>
+                </div>
+                <p className="text-gray-400 text-xs mt-2">
+                  Unggah dalam format PDF dengan ukuran maksimal 5 MB.
+                </p>
               </div>
             </div>
 

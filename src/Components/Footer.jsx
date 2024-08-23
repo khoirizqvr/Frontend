@@ -50,7 +50,7 @@ function Footer() {
           ></iframe>
         </div>
       </div>
-      <p className="text-center py-5 font-bold">
+      <p className="text-center py-5 font-semibold">
         Copyright © 2024 Dinas Kependudukan dan Pencatatan Sipil Kota Semarang.
         All rights reserved
       </p>
