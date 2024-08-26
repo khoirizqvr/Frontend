@@ -12,6 +12,7 @@ import FormPendaftaran1 from "./Pages/FormPendaftaran1";
 import FormPendaftaran2 from "./Pages/FormPendaftaran2";
 import DaftarMagang from "./Pages/DaftarMagang";
 import ProfileUser from "./Pages/ProfileUser";
+import EditProfile from "./Pages/EditProfile";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -50,6 +51,10 @@ export default function App() {
     {
       path: "profileuser",
       element: <ProfileUser />,
+    },
+    {
+      path: "editprofile",
+      element: <EditProfile />,
     },
     // {
     //   path: "/",
