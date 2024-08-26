@@ -1,7 +1,7 @@
 import "./App.css";
 import React from "react";
 import Beranda from "./Pages/Beranda";
-import Login from "./Pages/login";
+import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import { createBrowserRouter,RouterProvider } from "react-router-dom";
 import "./index.css";
@@ -11,6 +11,7 @@ import ProfileMitra from "./Components/profileMitra";
 import FormPendaftaran1 from "./Pages/FormPendaftaran1";
 import FormPendaftaran2 from "./Pages/FormPendaftaran2";
 import DaftarMagang from "./Pages/DaftarMagang";
+import ProfileUser from "./Pages/ProfileUser";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -34,7 +35,6 @@ export default function App() {
       path: "profileMitra",
       element: <ProfileMitra />,
     },
-
     {
       path: "daftarmagang",
       element: <DaftarMagang />,
@@ -46,6 +46,10 @@ export default function App() {
     {
       path: "formpendaftaran2",
       element: <FormPendaftaran2 />,
+    },
+    {
+      path: "profileuser",
+      element: <ProfileUser />,
     },
     // {
     //   path: "/",
