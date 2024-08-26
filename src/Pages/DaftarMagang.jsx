@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../Components/navbar"; // Mengimpor komponen navbar
+import Navbar from "../Components/navbar";
 import Background from "../assets/Pictures/bg-daftarmagang.svg";
 import { useNavigate } from "react-router-dom";
 
