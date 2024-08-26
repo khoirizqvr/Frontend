@@ -2,6 +2,7 @@ import React from "react";
 import ProfileBackground from "../assets/Pictures/Profile.png";
 import Photoprofile from "../assets/Pictures/Profile.png";
 import Navbar from "../Components/navbar";
+import Footer from "../Components/Footer";
 
 const ProfilePage = () => {
   return (
@@ -184,6 +185,7 @@ const ProfilePage = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
