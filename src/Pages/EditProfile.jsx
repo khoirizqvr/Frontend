@@ -350,7 +350,7 @@ const EditProfilePage = () => {
                   </select>
                 </div>
                 <div className="mt-2">
-                  <label className="block mb-2">Alamat</label>
+                  <label className="block mb-2">Alamat KTP</label>
                   <input
                     type="text"
                     name="alamatKTP"
