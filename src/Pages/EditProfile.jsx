@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Navbar from "../Components/navbar";
 import Footer from "../Components/Footer";
-import Profile from "../assets/Pictures/man.svg";
+import Profile from "../assets/Pictures/Profile.png";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
@@ -33,13 +33,13 @@ const EditProfilePage = () => {
 
   const [provinsiList, setProvinsiList] = useState([]);
   const [kotaListDomisili, setKotaListDomisili] = useState([]);
-  const [kotaListKTP, setKotaListKTP] = useState([]); // State baru untuk menyimpan Kota/Kabupaten KTP
+  const [kotaListKTP, setKotaListKTP] = useState([]);
   const [cropper, setCropper] = useState(null);
   const [showCropper, setShowCropper] = useState(false);
+  const [isAlamatSama, setIsAlamatSama] = useState(false);
   const imageInputRef = useRef(null);
 
   useEffect(() => {
-    // Fetch data provinsi dari API
     axios
       .get("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json")
       .then((response) => {
@@ -52,32 +52,50 @@ const EditProfilePage = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+
+    if (
+      name === "provinsiDomisili" ||
+      name === "kotaDomisili" ||
+      name === "alamatDomisili"
+    ) {
+      setIsAlamatSama(false);
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+        provinsiKTP: "",
+        kotaKTP: "",
+        alamatKTP: "",
+      }));
+    } else {
+      setFormData((prevData) => ({ ...prevData, [name]: value }));
+    }
 
     if (name === "provinsiDomisili") {
       const selectedProvince = provinsiList.find(
         (provinsi) => provinsi.name === value
       );
       if (selectedProvince) {
-        fetchKota(selectedProvince.id, 'domisili');
+        fetchKota(selectedProvince.id, "domisili");
       }
     } else if (name === "provinsiKTP") {
       const selectedProvince = provinsiList.find(
         (provinsi) => provinsi.name === value
       );
       if (selectedProvince) {
-        fetchKota(selectedProvince.id, 'ktp');
+        fetchKota(selectedProvince.id, "ktp");
       }
     }
   };
 
   const fetchKota = (provinceId, type) => {
     axios
-      .get(`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinceId}.json`)
+      .get(
+        `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinceId}.json`
+      )
       .then((response) => {
-        if (type === 'domisili') {
+        if (type === "domisili") {
           setKotaListDomisili(response.data);
-        } else if (type === 'ktp') {
+        } else if (type === "ktp") {
           setKotaListKTP(response.data);
         }
       })
@@ -86,11 +104,53 @@ const EditProfilePage = () => {
       });
   };
 
+  const handleAlamatCheckbox = async (e) => {
+    const checked = e.target.checked;
+    setIsAlamatSama(checked);
+
+    if (checked) {
+      setFormData((prevData) => ({
+        ...prevData,
+        provinsiKTP: prevData.provinsiDomisili,
+        alamatKTP: prevData.alamatDomisili,
+      }));
+
+      const selectedProvince = provinsiList.find(
+        (provinsi) => provinsi.name === formData.provinsiDomisili
+      );
+
+      if (selectedProvince) {
+        try {
+          const response = await axios.get(
+            `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${selectedProvince.id}.json`
+          );
+
+          const kotaList = response.data;
+
+          setKotaListKTP(kotaList);
+
+          const matchingKota = kotaList.find(
+            (kota) => kota.name === formData.kotaDomisili
+          );
+
+          if (matchingKota) {
+            setFormData((prevData) => ({
+              ...prevData,
+              kotaKTP: matchingKota.name,
+            }));
+          }
+        } catch (error) {
+          console.error("Error fetching KTP cities:", error);
+        }
+      }
+    }
+  };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setFormData({ ...formData, fotoProfil: file });
-      setShowCropper(true); // Show cropper after selecting image
+      setShowCropper(true);
     }
   };
 
@@ -106,18 +166,13 @@ const EditProfilePage = () => {
         const croppedImage = croppedCanvas.toDataURL();
         setFormData({ ...formData, croppedImage });
         setShowCropper(false);
-      } else {
-        console.error("Failed to get cropped canvas.");
       }
-    } else {
-      console.error("Cropper is not initialized or invalid.");
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    // Handle form submission, e.g., send data to the server
   };
 
   const imageUrl = formData.fotoProfil
@@ -127,16 +182,17 @@ const EditProfilePage = () => {
   return (
     <div className="bg-[#D24545] min-h-screen flex flex-col">
       <Navbar />
-      <div className="w-[1100px] mx-auto bg-[#f6f6f6] rounded-2xl my-10 pb-6">
-        <h1 className="text-3xl font-semibold text-center my-12">Edit Profil</h1>
+      <div className="w-[1100px] mx-auto bg-white rounded-2xl mt-32 mb-10 pb-6">
+        <h1 className="text-3xl font-bold text-center py-8 border-b-2">
+          Edit Profil
+        </h1>
         <form onSubmit={handleSubmit} className="px-6">
-          {/* Grid Layout untuk Foto Profil dan Kontak Pribadi */}
-          <div className="flex my-8">
+          <div className="flex my-8 gap-4">
             <div className="relative justify-center mx-16">
               <img
                 src={formData.croppedImage || imageUrl}
                 alt="Foto Profil"
-                className="w-[285px] object-cover rounded-full"
+                className="w-[300px] object-cover rounded-full"
               />
               <input
                 type="file"
@@ -145,14 +201,14 @@ const EditProfilePage = () => {
                 ref={imageInputRef}
                 className="absolute inset-0 opacity-0 cursor-pointer"
               />
-              {/* Icon pencil-square ditempatkan di pojok kanan bawah gambar */}
               <div className="absolute bottom-0 right-0 transform translate-x-[-5px] translate-y-[-25px] bg-white p-1 rounded-full shadow-md cursor-pointer">
                 <PencilSquareIcon className="h-10 text-gray-600" />
               </div>
             </div>
-            {/* Informasi Kontak Pribadi */}
-            <div className="border rounded p-4 w-[750px]">
-              <label className="font-semibold block mb-2">Kontak Pribadi</label>
+            <div className="border rounded p-4 w-[750px] h-min">
+              <label className="font-semibold block mb-2 text-xl">
+                Kontak Pribadi
+              </label>
               <div className="mb-4">
                 <label className="block mb-2">Email</label>
                 <input
@@ -178,7 +234,7 @@ const EditProfilePage = () => {
 
           {showCropper && (
             <div className="border rounded p-4 mb-4">
-              <label className="font-semibold block mb-2">
+              <label className="font-semibold block mb-2 text-xl">
                 Crop Foto Profil
               </label>
               <Cropper
@@ -191,7 +247,6 @@ const EditProfilePage = () => {
                   setCropper(instance);
                 }}
               />
-
               <div className="flex justify-between mt-4">
                 <button
                   type="button"
@@ -211,9 +266,8 @@ const EditProfilePage = () => {
             </div>
           )}
 
-          {/* Informasi Data Pribadi */}
           <div className="border rounded p-4">
-            <label className="font-semibold block mb-2">
+            <label className="font-semibold block mb-2 text-xl">
               Informasi Data Pribadi
             </label>
             <div className="grid grid-cols-2 gap-4">
@@ -263,12 +317,11 @@ const EditProfilePage = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-4 mt-4">
-              {/* Alamat Domisili */}
               <div>
-                <label className="font-semibold block mb-2">
+                <label className="font-semibold block mb-2 text-xl">
                   Alamat Domisili Tinggal
                 </label>
-                <div className="mt-2">
+                <div className="mt-12">
                   <label className="block mb-2">Provinsi</label>
                   <select
                     name="provinsiDomisili"
@@ -302,21 +355,31 @@ const EditProfilePage = () => {
                 </div>
                 <div className="mt-2">
                   <label className="block mb-2">Alamat Domisili</label>
-                  <input
-                    type="text"
+                  <textarea
                     name="alamatDomisili"
                     value={formData.alamatDomisili}
                     onChange={handleChange}
                     className="w-full border rounded px-3 py-2"
+                    rows="4"
+                    style={{ resize: "none" }}
                   />
                 </div>
               </div>
 
-              {/* Alamat KTP */}
               <div>
-                <label className="font-semibold block mb-2">
+                <label className="font-semibold block mb-2 text-xl">
                   Alamat Domisili KTP
                 </label>
+                <div className="mt-4">
+                  <input
+                    type="checkbox"
+                    checked={isAlamatSama}
+                    onChange={handleAlamatCheckbox}
+                  />
+                  <label className="ml-2">
+                    Alamat Domisili sama dengan Alamat KTP
+                  </label>
+                </div>
                 <div className="mt-2">
                   <label className="block mb-2">Provinsi</label>
                   <select
@@ -324,6 +387,7 @@ const EditProfilePage = () => {
                     value={formData.provinsiKTP}
                     onChange={handleChange}
                     className="w-full border rounded px-3 py-2"
+                    disabled={isAlamatSama}
                   >
                     <option value="">Pilih Provinsi</option>
                     {provinsiList.map((provinsi) => (
@@ -340,6 +404,7 @@ const EditProfilePage = () => {
                     value={formData.kotaKTP}
                     onChange={handleChange}
                     className="w-full border rounded px-3 py-2"
+                    disabled={isAlamatSama}
                   >
                     <option value="">Pilih Kota/Kabupaten</option>
                     {kotaListKTP.map((kota) => (
@@ -351,12 +416,13 @@ const EditProfilePage = () => {
                 </div>
                 <div className="mt-2">
                   <label className="block mb-2">Alamat KTP</label>
-                  <input
-                    type="text"
-                    name="alamatKTP"
+                  <textarea
+                    name="alamatDomisili"
                     value={formData.alamatKTP}
                     onChange={handleChange}
                     className="w-full border rounded px-3 py-2"
+                    rows="4"
+                    style={{ resize: "none" }}
                   />
                 </div>
               </div>
@@ -364,9 +430,8 @@ const EditProfilePage = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-4 my-8">
-            {/* Informasi Akademik */}
             <div className="border rounded p-4">
-              <label className="font-semibold block mb-2">
+              <label className="font-semibold block mb-2 text-xl">
                 Informasi Akademik
               </label>
               <div className="">
@@ -405,9 +470,11 @@ const EditProfilePage = () => {
                 </div>
               </div>
             </div>
-            {/* Pembimbing */}
+
             <div className="border rounded p-4">
-              <label className="font-semibold block mb-2">Pembimbing</label>
+              <label className="font-semibold block mb-2 text-xl">
+                Pembimbing
+              </label>
               <div>
                 <label className="block mb-2">Nama Pembimbing</label>
                 <input

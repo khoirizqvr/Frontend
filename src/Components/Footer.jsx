@@ -44,7 +44,7 @@ function Footer() {
             width="450"
             height="220"
             style={{ border: 0 }}
-            allowfullscreen=""
+            allowFullscreen=""
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
           ></iframe>

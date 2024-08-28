@@ -10,7 +10,7 @@ function FormPendaftaran2() {
   return (
     <div className="bg-[#D24545] min-h-screen flex flex-col">
       <Navbar />
-      <div className="container mx-auto px-4 py-8 flex justify-center">
+      <div className="container mx-auto px-4 py-8 mt-24 mb-3 flex justify-center">
         <div className="bg-white rounded-lg shadow-lg p-6 w-full md:w-3/5">
           <div className="mb-6">
             {/* Tombol Kembali */}
