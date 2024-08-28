@@ -1,8 +1,10 @@
 import React from "react";
 import Photo from "../assets/Pictures/disdukcapil.png";
 import Logo from "../assets/Pictures/logodisdukcapil.png";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex h-screen w-screen">
       {/* Sisi Kiri (Bagian Gambar) */}
@@ -25,7 +27,8 @@ const Login = () => {
             <img src={Logo} alt="Logo" className="h-16 mr-4" />
             <div>
               <h2 className="text-3xl font-bold text-left text-gray-800">
-                <span className="text-black">Masuk</span> <span style={{ color: "#D24545" }}>Akun</span>
+                <span className="text-black">Masuk</span>{" "}
+                <span style={{ color: "#D24545" }}>Akun</span>
               </h2>
               <p className="font-bold text-left text-gray-800">
                 Silahkan Masuk Ke Akun Anda Untuk Mendaftar
@@ -46,7 +49,10 @@ const Login = () => {
               />
             </div>
             <div className="mb-6">
-              <label htmlFor="password" className="block text-gray-700 text-left">
+              <label
+                htmlFor="password"
+                className="block text-gray-700 text-left"
+              >
                 Password
               </label>
               <input
@@ -68,9 +74,12 @@ const Login = () => {
           </form>
           <p className="mt-6 text-center text-gray-600">
             Belum punya akun?{" "}
-            <a href="#" className="text-[#D24545] hover:underline">
+            <button
+              className="text-[#D24545] hover:underline"
+              onClick={() => navigate("/register")}
+            >
               Daftar sekarang
-            </a>
+            </button>
           </p>
         </div>
       </div>

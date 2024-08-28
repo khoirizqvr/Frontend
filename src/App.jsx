@@ -3,14 +3,15 @@ import React from "react";
 import Beranda from "./Pages/Beranda";
 import Login from "./Pages/login";
 import Register from "./Pages/Register";
-import { createBrowserRouter,RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import InfoMitra from "./Pages/infoMitra";
-import ProfileMitra from "./Components/profileMitra";
-
 import FormPendaftaran1 from "./Pages/FormPendaftaran1";
 import FormPendaftaran2 from "./Pages/FormPendaftaran2";
 import DaftarMagang from "./Pages/DaftarMagang";
+import ProfileUser from "./Pages/ProfileUser";
+import EditProfile from "./Pages/EditProfile";
+import InfoPendaftaran from "./Pages/InfoPendaftaran";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -30,10 +31,6 @@ export default function App() {
       path: "mitra",
       element: <InfoMitra />,
     },
-    {
-      path: "profileMitra",
-      element: <ProfileMitra />,
-    },
 
     {
       path: "daftarmagang",
@@ -47,12 +44,20 @@ export default function App() {
       path: "formpendaftaran2",
       element: <FormPendaftaran2 />,
     },
-    // {
-    //   path: "/",
-    //   element: <Beranda/>,
-    // },
+    {
+      path: "profileuser",
+      element: <ProfileUser />,
+    },
+    {
+      path: "editprofile",
+      element: <EditProfile />,
+    },
+    {
+      path: "infopendaftaran",
+      element: <InfoPendaftaran />,
+    },
   ]);
-  
+
   return (
     <>
       <RouterProvider router={router} />
