@@ -9,7 +9,7 @@ function FormPendaftaran1() {
   return (
     <div className="bg-[#D24545] min-h-screen flex flex-col">
       <Navbar />
-      <div className="container mx-auto px-4 py-8 flex justify-center">
+      <div className="container mx-auto mt-24 mb-3 px-4 py-8 flex justify-center">
         <div className="bg-white rounded-lg shadow-lg p-6 w-3/5">
           <div className="flex justify-between items-center border-b-2 border-black mb-6 pb-4">
             <h2 className="text-2xl font-bold">FORM PENDAFTARAN</h2>

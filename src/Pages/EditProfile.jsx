@@ -182,7 +182,7 @@ const EditProfilePage = () => {
   return (
     <div className="bg-[#D24545] min-h-screen flex flex-col">
       <Navbar />
-      <div className="w-[1100px] mx-auto bg-white rounded-2xl mt-32 mb-11 pb-6">
+      <div className="w-[1100px] mx-auto bg-white rounded-2xl mt-32 mb-10 pb-6">
         <h1 className="text-3xl font-bold text-center py-8 border-b-2">
           Edit Profil
         </h1>
