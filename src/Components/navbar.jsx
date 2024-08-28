@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <div
       className="fixed z-50
-     container mx-auto bg-white"
+     container mx-auto bg-white w-full"
     >
       <div className=" py-5 flex justify-between items-center px-20 border-b-2 shadow-lg">
         <div className=" text-[#D24545] font-bold text-2xl">PRAJAGAMER</div>
@@ -38,7 +38,9 @@ const Navbar = () => {
           </button>
           <button
             className={`px-5 ${
-              isActive("/infopendaftaran") ? "text-[#D24545] font-bold" : "text-[#919191]"
+              isActive("/infopendaftaran")
+                ? "text-[#D24545] font-bold"
+                : "text-[#919191]"
             }`}
             onClick={() => {
               navigate("/infopendaftaran");
@@ -47,12 +49,14 @@ const Navbar = () => {
             Info Pendaftaran
           </button>
           <button
-              className={`px-5 ${
-                isActive("/daftarmagang") ? "text-[#D24545] font-bold" : "text-[#919191]"
-              }`}
-              onClick={() => {
-                navigate("/daftarmagang");
-              }}
+            className={`px-5 ${
+              isActive("/daftarmagang")
+                ? "text-[#D24545] font-bold"
+                : "text-[#919191]"
+            }`}
+            onClick={() => {
+              navigate("/daftarmagang");
+            }}
           >
             Daftar Magang
           </button>
