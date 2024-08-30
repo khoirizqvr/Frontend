@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { HomeIcon, MinusIcon, MoonIcon } from '@heroicons/react/24/solid';
+
 
 const SidebarButton = ({ icon, label, isActive, onClick }) => {
   return (
@@ -120,7 +122,7 @@ function Bidang() {
         {/* Sidebar */}
         <div className="bg-white p-6 rounded-xl shadow-lg w-64 min-h-[400px]">
           <SidebarButton
-            icon="icon1.png"
+            icon={HomeIcon}
             label="PIAK"
             isActive={activeBidang === "PIAK"}
             onClick={() => setActiveBidang("PIAK")}
