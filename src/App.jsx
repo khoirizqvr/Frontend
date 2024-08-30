@@ -12,6 +12,8 @@ import DaftarMagang from "./Pages/DaftarMagang";
 import ProfileUser from "./Pages/ProfileUser";
 import EditProfile from "./Pages/EditProfile";
 import InfoPendaftaran from "./Pages/InfoPendaftaran";
+import DashboardAdmin from "./Pages/DashboardAdmin";
+
 
 export default function App() {
   const router = createBrowserRouter([
@@ -55,6 +57,10 @@ export default function App() {
     {
       path: "infopendaftaran",
       element: <InfoPendaftaran />,
+    },
+    {
+      path: "admin",
+      element: <DashboardAdmin />,
     },
   ]);
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Tambahkan ini
 import HeaderImage from "../assets/Pictures/disdukcapil.png";
 import BackgroundImage from "../assets/Pictures/logodisdukcapil.png";
 import Photo from "../assets/Pictures/gambargaya.png";
@@ -6,6 +7,7 @@ import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate(); // Tambahkan ini
 
   return (
     <div className="min-h-screen w-full flex flex-col justify-between bg-gray-100 relative">
@@ -14,7 +16,7 @@ const Register = () => {
         <img
           src={BackgroundImage}
           alt="Background"
-          className="w-[600px] h-[600px] object-center opacity-20"
+          className="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] lg:w-[600px] lg:h-[600px] object-cover opacity-20"
         />
       </div>
 
@@ -239,7 +241,7 @@ const Register = () => {
                     />
                   </label>
                   <span className="bg-white text-gray-500 py-2 px-4 border border-l-0 rounded-r flex-1">
-                    Upload Transkrip
+                    Upload Transkrip Nilai
                   </span>
                 </div>
                 <p className="text-gray-400 text-xs mt-2">
@@ -248,43 +250,27 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Register Button */}
-            <div className="text-center">
-              <button className="w-full bg-red-500 text-white py-3 rounded-lg focus:outline-none hover:bg-red-600">
-                Daftar
-              </button>
-            </div>
-
-            {/* Already Have Account */}
-            <div className="text-center">
-              <p className="text-gray-600">
-                Sudah Punya Akun?{" "}
-                <a href="/login" className="text-red-500 hover:underline">
-                  Masuk Sekarang
-                </a>
+            {/* Buttons Section */}
+            <div className="flex justify-center space-x-8">
+              <p className="mt-6 text-center text-gray-600">
+                Belum punya akun?{" "}
+                <button
+                  className="text-[#D24545] hover:underline"
+                  onClick={() => navigate("/login")}
+                >
+                  Daftar sekarang
+                </button>
               </p>
             </div>
           </div>
         </div>
 
         {/* Footer Section */}
-        <div className="bg-red-700 text-white h-[250px] flex items-end mt-10">
-          <div className="grid grid-cols-2 w-full mx-36">
-            <div className="flex items-end">
-              <img src={Photo} alt="Photo" className="h-96" />
-            </div>
-            <div className="flex flex-col justify-center items-center text-4xl pt-10 mt-20">
-              <p>
-                Daftarkan Dirimu{" "}
-                <span className="font-bold text-yellow-400">Sekarang</span> Dan
-                Bergabung
-              </p>
-              <p>
-                Bersama Kami Untuk Mencari{" "}
-                <span className="font-bold text-yellow-400">Pengalaman</span>
-              </p>
-            </div>
-          </div>
+        <div className="text-center w-full bg-gradient-to-t from-red-500 to-red-700 text-white py-6 relative z-10 rounded-t-3xl flex justify-center items-center">
+          <p className="text-sm">
+            © 2023 Disdukcapil. All rights reserved. Created by PT.Lentera
+            Bangsa Benderang
+          </p>
         </div>
       </div>
     </div>

@@ -27,62 +27,75 @@ function InfoMitra() {
     <div>
       <Navbar />
       {/* Hero Section */}
-      <img src={Background} alt="" className="w-full" />
-      <div className="absolute inset-0 flex justify-between items-center mx-20 mb-40">
-        <div>
-          <p className="text-white font-bold text-5xl pb-3">
-            Belajar, Bertumbuh, dan{" "}
-            <span className="text-[#FFCC4E]"> Berkontribusi</span>
-          </p>
-          <p className="text-white font-bold text-2xl">
-            Bersama <span className="text-[#FFCC4E]">DISDUKCAPIL </span> Kota
-            Semarang
-          </p>
-          <p className="text-white text-xl">
-            Dengan lowongan magang, kami siap membantu anda belajar lebih jauh
-            tentang dunia kerja
-          </p>
+      <div className="relative">
+        <img
+          src={Background}
+          alt="Background"
+          className="max-sm:h-screen max-sm:w-full max-sm:object-cover max-sm:object-center h-[250px] md:h-[600px] object-cover "
+        />
+        <div className="absolute inset-0 flex flex-col md:flex-row justify-between items-center mx-4 md:mx-20 mb-10 md:mb-40 mt-60">
+          <div className="text-center md:text-left gap-5">
+            <p className="text-white font-bold text-2xl md:text-5xl pb-2 md:pb-3">
+              Belajar, Bertumbuh, dan{" "}
+              <span className="text-[#FFCC4E]"> Berkontribusi</span>
+            </p>
+            <p className="text-white font-bold text-lg md:text-2xl">
+              Bersama <span className="text-[#FFCC4E]">DISDUKCAPIL </span> Kota
+              Semarang
+            </p>
+            <p className="text-white text-sm md:text-xl mt-2 md:mt-4">
+              Dengan lowongan magang, kami siap membantu anda belajar lebih jauh
+              tentang dunia kerja
+            </p>
+          </div>
+          <img
+            src={Disdukcapil}
+            alt="Disdukcapil"
+            className=" hidden lg:block h-[150px] md:h-[250px] object-contain"
+          />
         </div>
-        <img src={Disdukcapil} alt="" />
       </div>
 
       {/* Button Pilihan Menu */}
-      <div className="absolute inset-0 bg-white mx-20 h-[100px] mt-[460px] shadow-lg rounded-lg flex justify-center space-x-10 py-5">
-        <button
-          className={`flex justify-center items-center py-5 w-64 border-2 font-bold rounded-xl text-2xl transition-colors duration-300 ${
-            activeComponent === "Profil"
-              ? "bg-[#D24545] text-white"
-              : "border-[#D24545] hover:bg-[#D24545] hover:text-white"
-          }`}
-          onClick={() => setActiveComponent("Profil")}
-        >
-          Profil
-        </button>
-        <button
-          className={`flex justify-center items-center py-5 w-64 border-2 font-bold rounded-xl text-2xl transition-colors duration-300 ${
-            activeComponent === "Bidang"
-              ? "bg-[#D24545] text-white"
-              : "border-[#D24545] hover:bg-[#D24545] hover:text-white"
-          }`}
-          onClick={() => setActiveComponent("Bidang")}
-        >
-          Bidang
-        </button>
-        <button
-          className={`flex justify-center items-center py-5 w-64 border-2 font-bold rounded-xl text-2xl transition-colors duration-300 ${
-            activeComponent === "Pelayanan TPDK"
-              ? "bg-[#D24545] text-white"
-              : "border-[#D24545] hover:bg-[#D24545] hover:text-white"
-          }`}
-          onClick={() => setActiveComponent("Pelayanan TPDK")}
-        >
-          Pelayanan TPDK
-        </button>
+      <div className="absolute inset-0 bg-white h-[120px]  shadow-lg rounded-lg flex flex-col md:flex-row justify-center items-end translate-y-80 px-5 py-5 md:px-10 md:py-5 mx-20 mt-52">
+        <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-10 w-full">
+          <button
+            className={`py-2 md:py-5 w-full md:w-64 border-2 font-bold rounded-xl text-xl md:text-2xl transition-colors duration-300 ${
+              activeComponent === "Profil"
+                ? "bg-[#D24545] text-white"
+                : "border-[#D24545] hover:bg-[#D24545] hover:text-white"
+            }`}
+            onClick={() => setActiveComponent("Profil")}
+          >
+            Profil
+          </button>
+          <button
+            className={`py-2 md:py-5 w-full md:w-64 border-2 font-bold rounded-xl text-xl md:text-2xl transition-colors duration-300 ${
+              activeComponent === "Bidang"
+                ? "bg-[#D24545] text-white"
+                : "border-[#D24545] hover:bg-[#D24545] hover:text-white"
+            }`}
+            onClick={() => setActiveComponent("Bidang")}
+          >
+            Bidang
+          </button>
+          <button
+            className={`py-2 md:py-5 w-full md:w-64 border-2 font-bold rounded-xl text-xl md:text-2xl transition-colors duration-300 ${
+              activeComponent === "Pelayanan TPDK"
+                ? "bg-[#D24545] text-white"
+                : "border-[#D24545] hover:bg-[#D24545] hover:text-white"
+            }`}
+            onClick={() => setActiveComponent("Pelayanan TPDK")}
+          >
+            Pelayanan TPDK
+          </button>
+        </div>
       </div>
 
-      {/* Detail */}
+      {/* Detail Section */}
       <div className="mt-28">{renderComponent()}</div>
-      <Footer/>
+
+      <Footer />
     </div>
   );
 }
