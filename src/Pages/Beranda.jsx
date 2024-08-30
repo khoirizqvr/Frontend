@@ -12,26 +12,30 @@ const Beranda = () => {
   const navigate = useNavigate();
   return (
     <div>
-      <img src={Beranda1} alt="" className="w-full mt-[-100px]" />
+      <img
+        src={Beranda1}
+        alt=""
+        className="max-sm:h-screen max-sm:w-full max-sm:object-cover max-sm:object-center lg:w-full lg:mt-[-100px]"
+      />
       <div className="absolute inset-0">
         <Navbar />
       </div>
 
-      <div className=" flex justify-center mt-64 py-10 absolute inset-0">
+      <div className="mt-[200px] md:flex px-10 text-center lg:flex lg:justify-center lg:mt-64 lg:py-10 absolute inset-0">
         <img
           src={Logo}
           alt="Logo"
-          className="h-[90px] mr-4 flex items-center"
+          className="h-[80px] lg:h-[90px] sm:flex max-sm:mx-auto"
         />
-        <div className="flex items-center flex-col">
-          <div className="text-5xl text-white font-semibold">
+        <div className="flex items-center flex-col max-md:mt-8">
+          <div className="text-4xl lg:text-5xl text-white font-semibold">
             Program Kerja dan Magang Merdeka
           </div>
-          <div className="text-2xl pt-3 text-white font-semibold">
+          <div className="text-xl lg:text-2xl pt-3 text-white font-semibold">
             Dinas Kependudukan dan Pencacatan Sipil Kota Semarang{" "}
           </div>
           <button
-            className="mt-20 bg-white text-[#D24545] py-2 px-20 text-2xl font-semibold rounded-xl border-[#D24545] shadow-xl"
+            className="mt-10 lg:mt-20 bg-white text-[#D24545] py-2 px-20 max-sm:text-xl text-2xl font-semibold rounded-xl border-[#D24545] shadow-xl"
             onClick={() => navigate("/daftarmagang")}
           >
             Daftar Magang
@@ -39,22 +43,22 @@ const Beranda = () => {
         </div>
       </div>
       <Tentang />
-      <div className="bg-gradient-to-l from-[#A94438] to-[#D24545] flex h-[250px] px-20">
-        <div className="flex items-end">
+      <div className="bg-gradient-to-l from-[#A94438] to-[#D24545] flex h-[250px]  lg:px-20">
+        <div className="hidden lg:flex items-end">
           <img src={fotoBeranda} alt="" className="h-[350px] object-cover" />
         </div>
-        <div className="flex justify-center flex-col pl-10 font-semibold">
-          <p className="text-3xl text-white">
+        <div className="flex justify-center flex-col pl-0 md:pl-5 lg:pl-10 font-semibold text-center lg:text-left">
+          <p className="text-lg md:text-3xl lg:text-3xl text-white">
             Kesempatan Terbaik untuk{" "}
             <span className="text-[#FFF382]">Mahasiswa</span> yang Sedang
             Mencari <span className="text-[#FFF382]">Pengalaman </span>Bekerja
           </p>
-          <p className="text-xl text-white py-3">
+          <p className="text-sm md:text-xl lg:text-xl text-white py-2 md:py-3">
             Segera Daftarkan dirimu sekarang!
           </p>
-          <div className="flex justify-center">
+          <div className="flex justify-center lg:justify-start">
             <button
-              className="mt-5 bg-white text-[#D24545] w-[400px] py-2 px-20 text-2xl font-semibold rounded-xl border-[#D24545] shadow-xl"
+              className="mt-3 md:mt-5 bg-white text-[#D24545] w-[250px] md:w-[300px] lg:w-[400px] py-2 px-10 md:px-20 text-lg md:text-xl lg:text-2xl font-semibold rounded-xl border-[#D24545] shadow-xl"
               onClick={() => navigate("/daftarmagang")}
             >
               Daftar Magang
@@ -62,6 +66,7 @@ const Beranda = () => {
           </div>
         </div>
       </div>
+
       <Mitra />
       <Footer />
     </div>

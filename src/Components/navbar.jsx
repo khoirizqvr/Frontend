@@ -12,14 +12,17 @@ const Navbar = () => {
 
   return (
     <div className="fixed z-50 w-full bg-white shadow-lg">
-      {/* Sidebar for Mobile */}
+      {/* Sidebar for Mobile and iPad */}
       <div
-        className={`fixed inset-0 bg-black bg-opacity-50 md:hidden transition-transform transform ${
+        className={`fixed inset-0 bg-black bg-opacity-50 lg:hidden transition-transform transform ${
           isSidebarOpen ? "translate-x-0" : "translate-x-full"
         }`}
         onClick={() => setIsSidebarOpen(false)}
       >
-        <div className="w-64 h-full bg-white p-5 flex flex-col">
+        <div
+          className="fixed right-0 w-64 h-full bg-white p-5 flex flex-col"
+          onClick={(e) => e.stopPropagation()}
+        >
           <button
             className="text-[#D24545] self-end"
             onClick={() => setIsSidebarOpen(false)}
@@ -28,7 +31,7 @@ const Navbar = () => {
           </button>
           <div className="mt-10 space-y-4">
             <button
-              className={`block w-full px-5 py-2 text-left ${
+              className={`block w-full px-5 py-2 text-left text-xl ${
                 isActive("/") ? "text-[#D24545] font-bold" : "text-[#919191]"
               }`}
               onClick={() => {
@@ -39,7 +42,7 @@ const Navbar = () => {
               Beranda
             </button>
             <button
-              className={`block w-full px-5 py-2 text-left ${
+              className={`block w-full px-5 py-2 text-left text-xl ${
                 isActive("/mitra") ? "text-[#D24545] font-bold" : "text-[#919191]"
               }`}
               onClick={() => {
@@ -50,8 +53,10 @@ const Navbar = () => {
               Tentang Kami
             </button>
             <button
-              className={`block w-full px-5 py-2 text-left ${
-                isActive("/infopendaftaran") ? "text-[#D24545] font-bold" : "text-[#919191]"
+              className={`block w-full px-5 py-2 text-left text-xl ${
+                isActive("/infopendaftaran")
+                  ? "text-[#D24545] font-bold"
+                  : "text-[#919191]"
               }`}
               onClick={() => {
                 navigate("/infopendaftaran");
@@ -61,8 +66,10 @@ const Navbar = () => {
               Info Pendaftaran
             </button>
             <button
-              className={`block w-full px-5 py-2 text-left ${
-                isActive("/daftarmagang") ? "text-[#D24545] font-bold" : "text-[#919191]"
+              className={`block w-full px-5 py-2 text-left text-xl ${
+                isActive("/daftarmagang")
+                  ? "text-[#D24545] font-bold"
+                  : "text-[#919191]"
               }`}
               onClick={() => {
                 navigate("/daftarmagang");
@@ -82,15 +89,13 @@ const Navbar = () => {
       </div>
 
       {/* Main Navbar */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-5 flex items-center justify-between">
+      <div className=" container mx-auto px-4 sm:px-6 lg:px-8 py-5 flex items-center justify-between">
         {/* Logo */}
-        <div className="text-[#D24545] font-bold text-2xl">
-          PRAJAGAMER
-        </div>
+        <div className="text-[#D24545] font-bold text-2xl">PRAJAGAMER</div>
 
-        {/* Menu Toggle Button for Mobile */}
+        {/* Menu Toggle Button for Mobile and iPad */}
         <button
-          className="md:hidden text-[#D24545] p-2"
+          className="lg:hidden text-[#D24545] p-2"
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         >
           {isSidebarOpen ? (
@@ -101,9 +106,9 @@ const Navbar = () => {
         </button>
 
         {/* Navbar Links for Desktop */}
-        <div className="hidden md:flex md:items-center md:space-x-6">
+        <div className="max-lg:hidden">
           <button
-            className={`px-5 py-2 ${
+            className={`px-5 py-2 text-xl ${
               isActive("/") ? "text-[#D24545] font-bold" : "text-[#919191]"
             }`}
             onClick={() => navigate("/")}
@@ -111,7 +116,7 @@ const Navbar = () => {
             Beranda
           </button>
           <button
-            className={`px-5 py-2 ${
+            className={`px-5 py-2 text-xl ${
               isActive("/mitra") ? "text-[#D24545] font-bold" : "text-[#919191]"
             }`}
             onClick={() => navigate("/mitra")}
@@ -119,16 +124,20 @@ const Navbar = () => {
             Tentang Kami
           </button>
           <button
-            className={`px-5 py-2 ${
-              isActive("/infopendaftaran") ? "text-[#D24545] font-bold" : "text-[#919191]"
+            className={`px-5 py-2 text-xl ${
+              isActive("/infopendaftaran")
+                ? "text-[#D24545] font-bold"
+                : "text-[#919191]"
             }`}
             onClick={() => navigate("/infopendaftaran")}
           >
             Info Pendaftaran
           </button>
           <button
-            className={`px-5 py-2 ${
-              isActive("/daftarmagang") ? "text-[#D24545] font-bold" : "text-[#919191]"
+            className={`px-5 py-2 text-xl ${
+              isActive("/daftarmagang")
+                ? "text-[#D24545] font-bold"
+                : "text-[#919191]"
             }`}
             onClick={() => navigate("/daftarmagang")}
           >
@@ -138,7 +147,7 @@ const Navbar = () => {
 
         {/* Login Button for Desktop */}
         <button
-          className="hidden md:block px-8 py-2 bg-[#D24545] text-xl rounded-lg text-white font-bold hover:bg-[#b83636] hover:shadow-lg transform hover:scale-105 transition duration-300"
+          className="hidden lg:block px-8 py-2 bg-[#D24545] text-2xl rounded-lg text-white font-bold hover:bg-[#b83636] hover:shadow-lg transform hover:scale-105 transition duration-300"
           onClick={() => navigate("/login")}
         >
           Masuk
