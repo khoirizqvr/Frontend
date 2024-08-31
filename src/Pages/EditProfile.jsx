@@ -272,28 +272,15 @@ const EditProfilePage = () => {
             </label>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block mb-2">Nomor Induk Mahasiswa</label>
+                <label className="block mb-2">Nama Lengkap</label>
                 <input
                   type="text"
                   name="nim"
-                  value={formData.nim}
+                  value={formData.nama}
                   onChange={handleChange}
                   className="w-full border rounded px-3 py-2"
                 />
               </div>
-              <div>
-                <label className="block mb-2">Nomor Induk Kependudukan</label>
-                <input
-                  type="text"
-                  name="nik"
-                  value={formData.nik}
-                  onChange={handleChange}
-                  className="w-full border rounded px-3 py-2"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 mt-4">
               <div>
                 <label className="block mb-2">Tempat Lahir</label>
                 <input
@@ -304,12 +291,35 @@ const EditProfilePage = () => {
                   className="w-full border rounded px-3 py-2"
                 />
               </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 mt-4">
+              <div>
+                <label className="block mb-2">Nomor Induk Mahasiswa</label>
+                <input
+                  type="text"
+                  name="nik"
+                  value={formData.nim}
+                  onChange={handleChange}
+                  className="w-full border rounded px-3 py-2"
+                />
+              </div>
               <div>
                 <label className="block mb-2">Tanggal Lahir</label>
                 <input
                   type="date"
                   name="tanggalLahir"
                   value={formData.tanggalLahir}
+                  onChange={handleChange}
+                  className="w-full border rounded px-3 py-2"
+                />
+              </div>
+              <div>
+                <label className="block mb-2">Nomor Induk Kependudukan</label>
+                <input
+                  type="text"
+                  name="nik"
+                  value={formData.nik}
                   onChange={handleChange}
                   className="w-full border rounded px-3 py-2"
                 />
