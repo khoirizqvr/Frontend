@@ -1,10 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import Photo from "../assets/Pictures/disdukcapil.png";
 import Logo from "../assets/Pictures/logodisdukcapil.png";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post("http://localhost:5000/api/user/login", { email, password });
+      const { token, user } = response.data;
+
+      // Simpan token di localStorage atau sessionStorage
+      localStorage.setItem("token", token);
+      
+      // Arahkan pengguna ke halaman setelah login
+      navigate("/");
+
+    } catch (error) {
+      // Tangani error login
+      setError(error.response?.data?.error || "Login failed. Please try again.");
+    }
+  };
+
   return (
     <div className="flex h-screen w-screen">
       {/* Sisi Kiri (Bagian Gambar) */}
@@ -36,7 +60,9 @@ const Login = () => {
             </div>
           </div>
 
-          <form>
+          {error && <p className="text-red-600 text-center">{error}</p>}
+
+          <form onSubmit={handleLogin}>
             <div className="mb-4">
               <label htmlFor="email" className="block text-gray-700 text-left">
                 Email
@@ -44,8 +70,11 @@ const Login = () => {
               <input
                 type="email"
                 id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full p-3 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]"
                 placeholder="Email"
+                required
               />
             </div>
             <div className="mb-6">
@@ -58,8 +87,11 @@ const Login = () => {
               <input
                 type="password"
                 id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full p-3 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]"
                 placeholder="Password"
+                required
               />
               <a
                 href="#"
