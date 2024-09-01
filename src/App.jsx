@@ -16,6 +16,8 @@ import DashboardAdmin from "./Pages_Admin/DashboardAdmin";
 import HasilDaftarMagang from "./Pages_Admin/hasilDaftarMagang";
 import UpdateInfo from "./Pages_Admin/updateInfo";
 import AkunAdmin from "./Pages_Admin/akunAdmin";
+import DataPengguna from "./Pages_Admin/DataPengguna";
+import EditProfilAdmin from "./Pages_Admin/EditProfilAdmin";
 
 
 export default function App() {
@@ -76,6 +78,14 @@ export default function App() {
     {
       path: "adminakun",
       element: <AkunAdmin />,
+    },
+    {
+      path: "datapengguna",
+      element: <DataPengguna />,
+    },
+    {
+      path: "editprofiladmin",
+      element: <EditProfilAdmin />,
     },
   ]);
 
