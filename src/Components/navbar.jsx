@@ -95,7 +95,7 @@ const Navbar = () => {
 
         {/* Menu Toggle Button for Mobile and iPad */}
         <button
-          className="lg:hidden text-[#D24545] p-2"
+          className="  lg:hidden text-[#D24545] p-2"
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         >
           {isSidebarOpen ? (
@@ -106,7 +106,8 @@ const Navbar = () => {
         </button>
 
         {/* Navbar Links for Desktop */}
-        <div className="hidden md:flex md:items-center md:space-x-6 text-xl">
+        <div className="hidden lg:flex lg:items-center lg:space-x-6 text-xl">
+
           <button
             className={`px-5 py-2 text-xl ${
               isActive("/") ? "text-[#D24545] font-bold" : "text-[#919191]"

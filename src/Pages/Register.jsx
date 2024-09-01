@@ -250,6 +250,8 @@ const Register = () => {
               </div>
             </div>
 
+            <button className="py-3 px-10 bg-yellow-300">Simpan</button>
+
             {/* Buttons Section */}
             <div className="flex justify-center space-x-8">
               <p className="mt-6 text-center text-gray-600">
