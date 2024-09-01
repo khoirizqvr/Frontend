@@ -57,40 +57,40 @@ function InfoMitra() {
       </div>
 
       {/* Button Pilihan Menu */}
-      <div className="absolute inset-0 bg-white h-[120px]  shadow-lg rounded-lg flex flex-col md:flex-row justify-center items-end translate-y-80 px-5 py-5 md:px-10 md:py-5 mx-20 mt-52">
-        <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-10 w-full">
-          <button
-            className={`py-2 md:py-5 w-full md:w-64 border-2 font-bold rounded-xl text-xl md:text-2xl transition-colors duration-300 ${
-              activeComponent === "Profil"
-                ? "bg-[#D24545] text-white"
-                : "border-[#D24545] hover:bg-[#D24545] hover:text-white"
-            }`}
-            onClick={() => setActiveComponent("Profil")}
-          >
-            Profil
-          </button>
-          <button
-            className={`py-2 md:py-5 w-full md:w-64 border-2 font-bold rounded-xl text-xl md:text-2xl transition-colors duration-300 ${
-              activeComponent === "Bidang"
-                ? "bg-[#D24545] text-white"
-                : "border-[#D24545] hover:bg-[#D24545] hover:text-white"
-            }`}
-            onClick={() => setActiveComponent("Bidang")}
-          >
-            Bidang
-          </button>
-          <button
-            className={`py-2 md:py-5 w-full md:w-64 border-2 font-bold rounded-xl text-xl md:text-2xl transition-colors duration-300 ${
-              activeComponent === "Pelayanan TPDK"
-                ? "bg-[#D24545] text-white"
-                : "border-[#D24545] hover:bg-[#D24545] hover:text-white"
-            }`}
-            onClick={() => setActiveComponent("Pelayanan TPDK")}
-          >
-            Pelayanan TPDK
-          </button>
-        </div>
-      </div>
+      <div className="absolute inset-0 bg-white h-[280px] md:h-[280px] lg:h-[120px] shadow-lg rounded-lg flex flex-col md:flex-row justify-center items-end translate-y-80 px-5 py-5 md:px-10 md:py-5 mx-4 md:mx-20 mt-52">
+  <div className="flex flex-col md:flex-row md:gap-5 justify-center items-center w-full">
+    <button
+      className={`py-2 md:py-5 w-full md:w-64 border-2 font-bold rounded-xl text-xl md:text-2xl transition-colors duration-300 ${
+        activeComponent === "Profil"
+          ? "bg-[#D24545] text-white"
+          : "border-[#D24545] hover:bg-[#D24545] hover:text-white"
+      }`}
+      onClick={() => setActiveComponent("Profil")}
+    >
+      Profil
+    </button>
+    <button
+      className={`py-2 md:py-5 w-full md:w-64 border-2 font-bold rounded-xl text-xl md:text-2xl transition-colors duration-300 ${
+        activeComponent === "Bidang"
+          ? "bg-[#D24545] text-white"
+          : "border-[#D24545] hover:bg-[#D24545] hover:text-white"
+      }`}
+      onClick={() => setActiveComponent("Bidang")}
+    >
+      Bidang
+    </button>
+    <button
+      className={`py-2 md:py-5 w-full md:w-64 border-2 font-bold rounded-xl text-xl md:text-2xl transition-colors duration-300 ${
+        activeComponent === "Pelayanan TPDK"
+          ? "bg-[#D24545] text-white"
+          : "border-[#D24545] hover:bg-[#D24545] hover:text-white"
+      }`}
+      onClick={() => setActiveComponent("Pelayanan TPDK")}
+    >
+      Pelayanan TPDK
+    </button>
+  </div>
+</div>
 
       {/* Detail Section */}
       <div className="mt-28">{renderComponent()}</div>

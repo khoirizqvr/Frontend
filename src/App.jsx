@@ -12,7 +12,10 @@ import DaftarMagang from "./Pages/DaftarMagang";
 import ProfileUser from "./Pages/ProfileUser";
 import EditProfile from "./Pages/EditProfile";
 import InfoPendaftaran from "./Pages/InfoPendaftaran";
-import DashboardAdmin from "./Pages/DashboardAdmin";
+import DashboardAdmin from "./Pages_Admin/DashboardAdmin";
+import HasilDaftarMagang from "./Pages_Admin/hasilDaftarMagang";
+import UpdateInfo from "./Pages_Admin/updateInfo";
+import AkunAdmin from "./Pages_Admin/akunAdmin";
 
 
 export default function App() {
@@ -61,6 +64,18 @@ export default function App() {
     {
       path: "admin",
       element: <DashboardAdmin />,
+    },
+    {
+      path: "hasildaftarmagang",
+      element: <HasilDaftarMagang />,
+    },
+    {
+      path: "updateinfo",
+      element: <UpdateInfo />,
+    },
+    {
+      path: "adminakun",
+      element: <AkunAdmin />,
     },
   ]);
 
