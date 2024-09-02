@@ -8,13 +8,14 @@ function mitra() {
         Instansi Pendidikan ternama di indonesia telah berkejasama dengan{" "}
         <span className="text-[#D24545]">Disdukcapil Kota Semarang</span>{" "}
       </div>
-      <div className="">
-        <img
-          src={Univ}
-          alt=""
-          className=""
-        />
-      </div>
+      <div className="flex justify-center items-center h-full">
+  <img
+    src={Univ}
+    alt=""
+    className="max-w-full h-auto"
+  />
+</div>
+
     </div>
   );
 }

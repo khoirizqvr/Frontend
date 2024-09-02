@@ -57,12 +57,7 @@ const Beranda = () => {
             Segera Daftarkan dirimu sekarang!
           </p>
           <div className="flex justify-center lg:justify-start">
-            <button
-              className="mt-3 md:mt-5 bg-white text-[#D24545] w-[250px] md:w-[300px] lg:w-[400px] py-2 px-10 md:px-20 text-lg md:text-xl lg:text-2xl font-semibold rounded-xl border-[#D24545] shadow-xl"
-              onClick={() => navigate("/daftarmagang")}
-            >
-              Daftar Magang
-            </button>
+           
           </div>
         </div>
       </div>

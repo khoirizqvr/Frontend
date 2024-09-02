@@ -1,7 +1,7 @@
 import "./App.css";
 import React from "react";
 import Beranda from "./Pages/Beranda";
-import Login from "./Pages/login";
+import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";

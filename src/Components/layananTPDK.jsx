@@ -243,9 +243,7 @@ const subdistricts = [
 ];
 
 const layananTPDK = () => {
-  const [activeSubdistrict, setActiveSubdistrict] = useState(
-    subdistricts[0].name
-  );
+  const [activeSubdistrict, setActiveSubdistrict] = useState(subdistricts[0].name);
   const [index, setIndex] = useState(0);
 
   const subdistrict = subdistricts.find(
@@ -254,37 +252,24 @@ const layananTPDK = () => {
 
   let districtSelected = subdistrict?.photos;
 
-  console.log("districtSelected", districtSelected);
-  console.log("subdistrict", subdistrict?.photos);
-
-  console.log("array", subdistricts);
-
-  console.log("kecamatan", activeSubdistrict);
-
-  const photos = activeSubdistrict.photos;
-
-  console.log("photos", photos);
-
   const renderContent = () => {
-    const { name, mapUrl, photos } = activeSubdistrict;
+    const { name, mapUrl, photos } = subdistrict || {};
 
     return (
       <div className="p-6 bg-white rounded-xl border-4 border-[#C54441] shadow-lg overflow-hidden">
         <h2 className="text-4xl font-bold mb-4 text-center pb-3 border-b-4 border-[#C54441]">
-          {subdistrict?.name}
+          {name}
         </h2>
-        <div className=" flex justify-between  py-5">
-          <div className="flex w-1/2 items-start ">
-            {/* <MapPinIcon className="h-16 w-16" /> */}
+        <div className="flex justify-between py-5">
+          <div className="flex w-1/2 items-start">
             <div className="ml-4">
               <p className="text-lg font-bold">Alamat :</p>
               <p>{subdistrict?.address}</p>
             </div>
           </div>
-
-          <div className=" flex items-start ">
+          <div className="flex items-start">
             <img src={Logo} alt="" className="h-11 mt-2" />
-            <div className="flex flex-col  ">
+            <div className="flex flex-col">
               <p className="text-lg font-bold">
                 Dinas Kependudukan Dan Pencatatan Sipil
               </p>
@@ -297,8 +282,8 @@ const layananTPDK = () => {
           <div className="w-1/2 pr-4">
             <div className="mb-6">
               <iframe
-                src={subdistrict?.mapUrl}
-                style={{ border: 0, width: "100%", height: "300px" }}
+                src={mapUrl}
+                style={{ border: 0, width: '100%', height: '300px' }}
                 allowFullScreen=""
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -306,17 +291,15 @@ const layananTPDK = () => {
               ></iframe>
             </div>
           </div>
-
           {/* Photos */}
           <div className="grid grid-cols-2 gap-4">
-            {console.log("photos:", photos)}
-            {subdistrict?.photos?.map((photo, index) => (
+            {photos?.map((photo, index) => (
               <img
                 key={index}
                 src={photo}
                 alt={`Foto ${index + 1}`}
                 className={`h-32 w-60 object-cover rounded-lg ${
-                  index === 0 || index === 3 ? "col-span-1" : ""
+                  index === 0 || index === 3 ? 'col-span-1' : ''
                 }`}
               />
             ))}
@@ -330,15 +313,30 @@ const layananTPDK = () => {
     infinite: true,
     slidesToShow: 3,
     slidesToScroll: 1,
-    // speed: 500,
-    // autoplay: true,
     autoplaySpeed: 3000,
-    centerMode: true, // Pastikan item yang dipilih berada di tengah
-    centerPadding: "0px", // Menghilangkan padding agar item benar-benar berada di tengah
+    centerMode: true,
+    centerPadding: '0px',
     focusOnSelect: true,
     beforeChange: (current, next) => {
-      setActiveSubdistrict(subdistricts[next].name), setIndex(next);
+      setActiveSubdistrict(subdistricts[next].name);
+      setIndex(next);
     },
+    responsive: [
+      {
+        breakpoint: 1024, // iPad and tablets
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 768, // Mobile devices
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   return (
@@ -354,8 +352,8 @@ const layananTPDK = () => {
               <div
                 className={`cursor-pointer rounded-lg overflow-hidden border-2 border-red-500 ${
                   activeSubdistrict === subdistrict.name
-                    ? "transform scale-105"
-                    : ""
+                    ? 'transform scale-105'
+                    : ''
                 } hover:scale-105 transition-transform duration-300`}
               >
                 <img
@@ -366,8 +364,8 @@ const layananTPDK = () => {
                 <div
                   className={`p-4 text-center ${
                     activeSubdistrict === subdistrict.name
-                      ? "bg-red-500 text-white"
-                      : "bg-white text-black"
+                      ? 'bg-red-500 text-white'
+                      : 'bg-white text-black'
                   }`}
                 >
                   <span className="font-bold text-lg">{subdistrict.name}</span>
@@ -378,7 +376,7 @@ const layananTPDK = () => {
         </Slider>
       </div>
 
-      <div className=" w-full max-w-4xl mx-auto">{renderContent()}</div>
+      <div className="w-full max-w-4xl mx-auto">{renderContent()}</div>
     </div>
   );
 };
