@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import HeaderAdmin from "../ComponentsAdmin/HeaderAdmin";
-import SidebarAdmin from "../ComponentsAdmin/SidebarAdmin";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
+import ModalTambahAdmin from "../ComponentsAdmin/modalTambahAdmin";
 
 function AkunAdmin() {
   const adminData = [
@@ -45,6 +47,16 @@ function AkunAdmin() {
     console.log(`Akun dengan ID ${id} akan dihapus.`);
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Header */}
@@ -53,7 +65,26 @@ function AkunAdmin() {
       {/* Main Content */}
       <div className="ml-64 pt-16 p-6 mt-5">
         <div className="mt-8 bg-white p-4 rounded shadow">
-          <h3 className="text-xl font-bold mb-4">Data Admin</h3>
+          <div className="flex  justify-between items-center pb-5">
+            <h3 className="text-xl font-bold">Data Admin</h3>
+            <div>
+              {/* Tombol untuk menampilkan modal */}
+              <button
+                className="px-4 py-2 rounded-md bg-[#D24545] text-white font-semibold flex justify-center items-center gap-2"
+                onClick={handleOpenModal}
+              >
+                <PlusCircleIcon className="h-5 w-5" />
+                Tambah Admin
+              </button>
+
+              {/* Modal */}
+              <ModalTambahAdmin
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+              />
+            </div>
+          </div>
+
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white">
               <thead>
@@ -75,6 +106,7 @@ function AkunAdmin() {
                   </th>
                 </tr>
               </thead>
+
               <tbody>
                 {adminData.map((admin) => (
                   <tr key={admin.id}>

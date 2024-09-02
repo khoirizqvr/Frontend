@@ -1,7 +1,7 @@
 import "./App.css";
 import React from "react";
 import Beranda from "./Pages/Beranda";
-import Login from "./Pages/login";
+import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
@@ -16,7 +16,8 @@ import DashboardAdmin from "./Pages_Admin/DashboardAdmin";
 import HasilDaftarMagang from "./Pages_Admin/hasilDaftarMagang";
 import UpdateInfo from "./Pages_Admin/updateInfo";
 import AkunAdmin from "./Pages_Admin/akunAdmin";
-
+import ModalTambahAdmin from "./ComponentsAdmin/modalTambahAdmin";
+import LoginAdmin from "./Pages_Admin/loginAdmin";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -76,6 +77,14 @@ export default function App() {
     {
       path: "adminakun",
       element: <AkunAdmin />,
+    },
+    {
+      path: "tambahadmin",
+      element: <ModalTambahAdmin />,
+    },
+    {
+      path: "loginadmin",
+      element: <LoginAdmin />,
     },
   ]);
 
