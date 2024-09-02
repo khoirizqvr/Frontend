@@ -46,7 +46,7 @@ function Bidang() {
             <img
               src={Piak}
               alt="PIAK"
-              className="w-full h-48 object-cover mb-6"
+              className="w-full h-auto max-h-48 object-contain mb-6"
             />
             <div className="p-6">
               <h2 className="text-2xl font-bold mb-4">
@@ -62,7 +62,7 @@ function Bidang() {
               </p>
 
               <h3 className="text-xl font-bold mb-4 text-justify">Fungsi</h3>
-              <ul className="list-decimal list-inside text-gray-700">
+              <ul className="list-decimal list-inside text-gray-700 text-justify">
                 <li>Perencanaan program, kegiatan dan anggaran;</li>
                 <li>
                   Pelaksanaan manajemen kinerja pegawai dalam lingkup tanggung
@@ -150,7 +150,7 @@ function Bidang() {
             <img
               src={Dafduk}
               alt="DAFDUK"
-              className="w-full h-48 object-cover mb-6"
+              className="w-full h-auto max-h-48 object-contain mb-6"
             />
             <div className="p-6">
               <h2 className="text-2xl font-bold mb-4">
@@ -277,7 +277,7 @@ function Bidang() {
             <img
               src={Sekre}
               alt="SEKRETARIAT"
-              className="w-full h-48 object-cover mb-6"
+              className="w-full h-auto max-h-48 object-contain mb-6"
             />
             <div className="p-6">
               <h2 className="text-2xl font-bold mb-4">
@@ -415,7 +415,7 @@ function Bidang() {
             <img
               src={Capil}
               alt="CAPIL"
-              className="w-full h-48 object-cover mb-6"
+              className="w-full h-auto max-h-48 object-contain mb-6"
             />
             <div className="p-6">
               <h2 className="text-2xl font-bold mb-4">
@@ -546,11 +546,10 @@ function Bidang() {
       case "PDIP":
         return (
           <div>
-            {" "}
             <img
               src={Pdip}
               alt="PDIP"
-              className="w-full h-48 object-cover mb-6"
+              className="w-full h-auto max-h-48 object-contain mb-6"
             />
             <div className="p-6">
               <h2 className="text-2xl font-bold mb-4 text-justify">
@@ -660,8 +659,8 @@ function Bidang() {
 
   return (
     <div className="flex justify-center bg-gray-100 py-10">
-      <div className="flex space-x-6 max-w-6xl w-full">
-        <div className="h-fit bg-white p-4 shadow-lg rounded-lg w-1/4">
+      <div className="flex flex-col gap-10 md:flex-row md:space-x-6 max-w-6xl w-full mx-5 md:mx-5">
+        <div className="h-fit  bg-white p-4 shadow-lg rounded-lg md:w-1/3 lg:w-1/4 ">
           <SidebarButton
             label="PIAK"
             isActive={activeBidang === "PIAK"}
@@ -688,7 +687,7 @@ function Bidang() {
             onClick={() => setActiveBidang("PDIP")}
           />
         </div>
-        <div className="bg-white p-6 shadow-lg rounded-lg w-3/4">
+        <div className="bg-white p-6 shadow-lg rounded-lg lg:w-3/4 ">
           {renderContent()}
         </div>
       </div>
