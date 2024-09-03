@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import HeaderAdmin from "../ComponentsAdmin/HeaderAdmin";
-import SidebarAdmin from "../ComponentsAdmin/SidebarAdmin";
 
 function UpdateInfo() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -9,20 +8,36 @@ function UpdateInfo() {
     setSelectedFile(event.target.files[0]);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (selectedFile) {
-      // Proses upload file di sini, misalnya mengirim file ke server
-      console.log("File yang dipilih:", selectedFile);
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+
+      try {
+        const response = await fetch('http://localhost:5000/api/banner', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (response.ok) {
+          alert('File uploaded successfully.');
+        } else {
+          alert('Failed to upload file.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while uploading the file.');
+      }
     } else {
       alert("Harap pilih file untuk diunggah.");
     }
   };
 
   return (
-    <div className="flex flex-col h-screen  bg-gray-100">
+    <div className="flex flex-col h-screen bg-gray-100">
       <HeaderAdmin className="relative z-20" />
-      <div className="max-w-md mx-auto mt-20 bg-white ml-66 p-10 rounded shadow">
+      <div className="max-w-md mx-auto mt-20 bg-white p-10 rounded shadow">
         <h2 className="text-xl font-bold mb-4">Upload Foto</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">

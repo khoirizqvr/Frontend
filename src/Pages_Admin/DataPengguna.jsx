@@ -19,6 +19,8 @@ const DataPengguna = () => {
       suratRekomendasi: "Lihat File",
       cv: "Lihat File",
       portofolio: "Lihat File",
+      transkripNilai: "Lihat File",
+      foto: "foto-johndoe.jpg",
       durasiAwal: "2024-09-01",
       durasiAkhir: "2024-12-01",
       menyetujuiSnK: "Iya",
@@ -27,48 +29,7 @@ const DataPengguna = () => {
       tanggalPembuatanAkun: "2024-08-20",
       statusAkun: "Terverifikasi",
     },
-    {
-      id: 2,
-      nama: "Jane Smith",
-      nim: "987654321",
-      nik: "1234567890123456",
-      email: "janesmith@example.com",
-      noTelp: "081298765432",
-      asalPendidikan: "Universitas B",
-      jurusan: "Sistem Informasi",
-      ketersediaanPenempatan: "Tidak Setuju",
-      suratRekomendasi: "Lihat File",
-      cv: "Lihat File",
-      portofolio: "Lihat File",
-      durasiAwal: "2024-09-05",
-      durasiAkhir: "2024-12-05",
-      menyetujuiSnK: "Tidak",
-      tanggalPendaftaran: "2024-09-01",
-      statusLamaran: "Diproses",
-      tanggalPembuatanAkun: "2024-08-22",
-      statusAkun: "Tidak Terverifikasi",
-    },
-    {
-      id: 3,
-      nama: "Alice Johnson",
-      nim: "654321987",
-      nik: "5678901234567890",
-      email: "alicejohnson@example.com",
-      noTelp: "081376543210",
-      asalPendidikan: "Universitas C",
-      jurusan: "Manajemen Informatika",
-      ketersediaanPenempatan: "Setuju",
-      suratRekomendasi: "Lihat File",
-      cv: "Lihat File",
-      portofolio: "Lihat File",
-      durasiAwal: "2024-09-10",
-      durasiAkhir: "2024-12-10",
-      menyetujuiSnK: "Iya",
-      tanggalPendaftaran: "2024-09-01",
-      statusLamaran: "Ditolak",
-      tanggalPembuatanAkun: "2024-08-25",
-      statusAkun: "Dalam Proses",
-    },
+    // Add more pesertaData entries with similar fields
   ];
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -94,7 +55,7 @@ const DataPengguna = () => {
 
       <div className="flex-1 flex flex-col ml-64 pt-16 p-6 mt-10 bg-gray-100">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-bold">Data Pelamar Magang</h3>
+          <h3 className="text-xl font-bold">Data Pengguna</h3>
           <button
             onClick={handleExportToExcel}
             className="px-4 py-2 bg-blue-500 text-white rounded shadow hover:bg-blue-600"
@@ -103,8 +64,7 @@ const DataPengguna = () => {
           </button>
         </div>
 
-        <div className="mt-8 bg-white p-4 rounded shadow">
-          <h3 className="text-xl font-bold mb-4">Data Pelamar</h3>
+        <div className=" bg-white p-4 rounded shadow">
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white">
               <thead>
@@ -131,6 +91,15 @@ const DataPengguna = () => {
                     Jurusan
                   </th>
                   <th className="py-2 px-4 border-b text-left text-sm font-semibold text-gray-600">
+                    Foto
+                  </th>
+                  <th className="py-2 px-4 border-b text-left text-sm font-semibold text-gray-600">
+                    CV
+                  </th>
+                  <th className="py-2 px-4 border-b text-left text-sm font-semibold text-gray-600">
+                    Transkrip Nilai
+                  </th>
+                  <th className="py-2 px-4 border-b text-left text-sm font-semibold text-gray-600">
                     Tanggal Pembuatan Akun
                   </th>
                   <th className="py-2 px-4 border-b text-left text-sm font-semibold text-gray-600">
@@ -153,6 +122,36 @@ const DataPengguna = () => {
                       {peserta.asalPendidikan}
                     </td>
                     <td className="py-2 px-4 border-b">{peserta.jurusan}</td>
+                    <td className="py-2 px-4 border-b">
+                      <a
+                        href={`/path/to/foto/${peserta.foto}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 hover:underline"
+                      >
+                        Lihat Foto
+                      </a>
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      <a
+                        href={`/path/to/cvs/${peserta.cv}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 hover:underline"
+                      >
+                        Lihat CV
+                      </a>
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      <a
+                        href={`/path/to/transkrip/${peserta.transkripNilai}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 hover:underline"
+                      >
+                        Lihat Transkrip
+                      </a>
+                    </td>
                     <td className="py-2 px-4 border-b">
                       {peserta.tanggalPembuatanAkun}
                     </td>
