@@ -1,8 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import Photo from "../assets/Pictures/disdukcapil.png";
 import Logo from "../assets/Pictures/logodisdukcapil.png";
 
-const loginAdmin = () => {
+const LoginAdmin = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError(""); // Reset error message
+
+    try {
+      const response = await axios.post("http://localhost:5000/api/admin/login", {
+        email,
+        password,
+      });
+
+      // Handle success
+      console.log("Login successful:", response.data);
+      // Store the token in local storage
+      localStorage.setItem("token", response.data.token);
+      // Redirect to admin dashboard
+      window.location.href = "/admin"; // Make sure this matches your dashboard route
+    } catch (err) {
+      console.error("Login failed:", err.response ? err.response.data : err.message);
+      setError(err.response ? err.response.data.error : "An error occurred during login.");
+    }
+  };
+
   return (
     <div className="flex lg:h-screen lg:w-screen">
       {/* Bagian Gambar untuk Desktop */}
@@ -42,7 +69,10 @@ const loginAdmin = () => {
             </div>
           </div>
 
-          <form>
+          {/* Error Message */}
+          {error && <p className="text-red-500 text-left">{error}</p>}
+
+          <form onSubmit={handleLogin}>
             <div className="mb-4">
               <label htmlFor="email" className="block text-gray-700 text-left">
                 Email
@@ -52,6 +82,9 @@ const loginAdmin = () => {
                 id="email"
                 className="w-full p-3 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]"
                 placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
             <div className="mb-6">
@@ -66,9 +99,15 @@ const loginAdmin = () => {
                 id="password"
                 className="w-full p-3 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]"
                 placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </div>
-            <button className="w-full p-3 bg-[#D24545] text-white font-bold rounded-lg hover:bg-red-700 transition">
+            <button
+              type="submit"
+              className="w-full p-3 bg-[#D24545] text-white font-bold rounded-lg hover:bg-red-700 transition"
+            >
               Masuk
             </button>
           </form>
@@ -78,4 +117,4 @@ const loginAdmin = () => {
   );
 };
 
-export default loginAdmin;
+export default LoginAdmin;

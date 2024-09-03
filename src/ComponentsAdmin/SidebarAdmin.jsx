@@ -34,7 +34,7 @@ const SidebarAdmin = () => {
           Beranda
         </button>
         <button
-          onClick={() => navigate("/admin")}
+          onClick={() => navigate("/datapengguna")}
           className="flex items-center px-3 py-3 hover:bg-red-700"
         >
           <MinusIcon className="h-6 w-6 mr-3" />

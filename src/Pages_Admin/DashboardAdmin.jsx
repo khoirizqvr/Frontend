@@ -3,7 +3,7 @@ import axios from "axios";
 import Sidebar from "../ComponentsAdmin/SidebarAdmin";
 import Header from "../ComponentsAdmin/HeaderAdmin";
 
-const Dashboard = () => {
+const DashboardAdmin = () => {
   const [applicantsData, setApplicantsData] = useState([]);
   const [totalApplicants, setTotalApplicants] = useState(0);
   const [acceptedApplicants, setAcceptedApplicants] = useState(0);
@@ -12,21 +12,25 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const token = localStorage.getItem("token"); // Consistent token retrieval
+
+      if (!token) {
+        setError("Anda belum login. Silakan login terlebih dahulu.");
+        window.location.href = "/login"; // Redirect to login page if not logged in
+        return;
+      }
+
       try {
-        // Mendapatkan token dari localStorage (atau sumber lain)
-        const token = localStorage.getItem('authToken'); 
+        const response = await axios.get(
+          "http://localhost:5000/api/admin/dashboard",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Send token in header
+            },
+          }
+        );
 
-        // Jika token tidak ada, set error dan return
-        if (!token) {
-          setError("Anda belum login. Silakan login terlebih dahulu.");
-          return;
-        }
-
-        const response = await axios.get("http://localhost:5000/api/admin/dashboard", {
-          headers: {
-            Authorization: `Bearer ${token}`, // Mengirimkan token dalam header
-          },
-        });
+        console.log("Response data:", response.data); // Log response data to check its structure
 
         setApplicantsData(response.data.applicantsList || []);
         setTotalApplicants(response.data.totalApplicants || 0);
@@ -35,9 +39,10 @@ const Dashboard = () => {
       } catch (error) {
         console.error("Error fetching applicants data:", error);
 
-        // Menangani error 401 secara khusus
         if (error.response && error.response.status === 401) {
           setError("Akses tidak diizinkan. Silakan login ulang.");
+          localStorage.removeItem("token"); // Remove invalid token
+          window.location.href = "/login"; // Redirect to login page
         } else {
           setError("Data tidak dapat diambil");
         }
@@ -63,7 +68,7 @@ const Dashboard = () => {
               </div>
               <div className="bg-white p-12 rounded shadow">
                 <h3 className="text-xl font-bold">Lamaran Diproses</h3>
-                <p className="text-2xl">80</p>
+                <p className="text-2xl">99</p>
               </div>
               <div className="bg-white p-12 rounded shadow">
                 <h3 className="text-xl font-bold">Lamaran Diterima</h3>
@@ -80,31 +85,57 @@ const Dashboard = () => {
                 <table className="min-w-full bg-white">
                   <thead>
                     <tr>
-                      <th className="py-2 px-4 border-b text-left text-sm font-semibold text-gray-600">Nama</th>
-                      <th className="py-2 px-4 border-b text-left text-sm font-semibold text-gray-600">Jenjang Pendidikan</th>
-                      <th className="py-2 px-4 border-b text-left text-sm font-semibold text-gray-600">Tanggal Pendaftaran</th>
-                      <th className="py-2 px-4 border-b text-left text-sm font-semibold text-gray-600">Status</th>
-                      <th className="py-2 px-4 border-b text-left text-sm font-semibold text-gray-600">Aksi</th>
+                      <th className="py-2 px-4 border-b text-left text-sm font-semibold text-gray-600">
+                        Nama
+                      </th>
+                      <th className="py-2 px-4 border-b text-left text-sm font-semibold text-gray-600">
+                        Jenjang Pendidikan
+                      </th>
+                      <th className="py-2 px-4 border-b text-left text-sm font-semibold text-gray-600">
+                        Tanggal Pendaftaran
+                      </th>
+                      <th className="py-2 px-4 border-b text-left text-sm font-semibold text-gray-600">
+                        Status
+                      </th>
+                      <th className="py-2 px-4 border-b text-left text-sm font-semibold text-gray-600">
+                        Aksi
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     {applicantsData.length > 0 ? (
-                      applicantsData.map((peserta) => (
-                        <tr key={peserta.id}>
-                          <td className="py-2 px-4 border-b">{peserta.nama}</td>
-                          <td className="py-2 px-4 border-b">{peserta.jenjangpendidikan}</td>
-                          <td className="py-2 px-4 border-b">{peserta.tanggal}</td>
-                          <td className="py-2 px-4 border-b">{peserta.status}</td>
+                      applicantsData.map((peserta, index) => (
+                        <tr key={index}>
                           <td className="py-2 px-4 border-b">
-                            <button className="text-blue-500 hover:underline">Lihat</button>
-                            <button className="ml-2 text-green-500 hover:underline">Terima</button>
-                            <button className="ml-2 text-red-500 hover:underline">Tolak</button>
+                            {peserta.user.name}
+                          </td>
+                          <td className="py-2 px-4 border-b">
+                            {peserta.user.University?.univ_name || "N/A"}
+                          </td>
+                          <td className="py-2 px-4 border-b">
+                            {new Date(
+                              peserta.user.createdAt
+                            ).toLocaleDateString()}
+                          </td>
+                          <td className="py-2 px-4 border-b">
+                            {peserta.user.status}
+                          </td>
+                          <td className="py-2 px-4 border-b">
+                            <button className="ml-2 text-green-500 hover:underline">
+                              Terima
+                            </button>
+                            <button className="ml-2 text-red-500 hover:underline">
+                              Tolak
+                            </button>
                           </td>
                         </tr>
                       ))
                     ) : (
                       <tr>
-                        <td colSpan="5" className="py-2 px-4 border-b text-center">
+                        <td
+                          colSpan="5"
+                          className="py-2 px-4 border-b text-center"
+                        >
                           Tidak ada data pendaftar
                         </td>
                       </tr>
@@ -120,4 +151,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardAdmin;
