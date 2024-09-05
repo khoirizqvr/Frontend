@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../Components/navbar";
 import Footer from "../Components/Footer";
 import { useNavigate } from "react-router-dom"; // Import useNavigate untuk navigasi
-
+import { useSelector } from "react-redux"; // Import useSelector untuk mengambil state dari Redux
 
 function FormPendaftaran1() {
   const navigate = useNavigate(); // Inisialisasi useNavigate
+
+  // Get the token from the Redux state
+  const token = useSelector((state) => state.auth.token);
+
+  // Redirect to login if token is not present
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  }, [token, navigate]); // Run effect when token or navigate changes
+
   return (
     <div className="bg-[#D24545] min-h-screen flex flex-col">
       <Navbar />
@@ -86,9 +97,10 @@ function FormPendaftaran1() {
 
           <div className="mt-6">
             <div className="flex justify-center">
-              <button 
-              onClick={() => navigate("/formpendaftaran2")}
-              className="bg-[#D24545] w-64 h-12 text-white font-semibold py-2 px-4 rounded-2xl hover:bg-red-600">
+              <button
+                onClick={() => navigate("/formpendaftaran2")}
+                className="bg-[#D24545] w-64 h-12 text-white font-semibold py-2 px-4 rounded-2xl hover:bg-red-600"
+              >
                 Selanjutnya
               </button>
             </div>

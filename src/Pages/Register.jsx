@@ -58,7 +58,7 @@ const Register = () => {
     formDataToSend.append("score_list", formData.score_list);
   
     try {
-      const response = await axios.post('http://localhost:5000/api/user/register', formDataToSend, {
+      const response = await axios.post('https://prajagamer-backend-64316396636.asia-southeast2.run.app/api/user/register', formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

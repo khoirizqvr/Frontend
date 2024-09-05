@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useEffect }from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate untuk navigasi
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"; // Import Heroicon
+import { useSelector } from "react-redux"; // Import useSelector untuk mengambil state dari Redux
 import Navbar from "../Components/navbar";
 import Footer from "../Components/Footer";
 
 function FormPendaftaran2() {
   const navigate = useNavigate(); // Inisialisasi useNavigate
+
+  // Get the token from the Redux state
+  const token = useSelector((state) => state.auth.token);
+
+  // Redirect to login if token is not present
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  }, [token, navigate]); // Run effect when token or navigate changes
 
   return (
     <div className="bg-[#D24545] min-h-screen flex flex-col">

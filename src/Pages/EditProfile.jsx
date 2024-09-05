@@ -2,10 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Navbar from "../Components/navbar";
 import Footer from "../Components/Footer";
-import Profile from "../assets/Pictures/Profile.png";
+import Profile from "../assets/Pictures/logodisdukcapil.png";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const EditProfilePage = () => {
   const [formData, setFormData] = useState({
@@ -49,6 +51,14 @@ const EditProfilePage = () => {
         console.error("Error fetching provinces data:", error);
       });
   }, []);
+
+  const navigate = useNavigate();
+  const token = useSelector((state) => state.auth.token);
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;

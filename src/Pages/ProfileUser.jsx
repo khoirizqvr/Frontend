@@ -1,6 +1,6 @@
 import React from "react";
-import ProfileBackground from "../assets/Pictures/Profile.png";
-import Photoprofile from "../assets/Pictures/Profile.png";
+import ProfileBackground from "../assets/Pictures/userprofile.svg";
+import Photoprofile from "../assets/Pictures/logodisdukcapil.png";
 import Navbar from "../Components/navbar";
 import Footer from "../Components/Footer";
 
