@@ -148,57 +148,57 @@ function HasilDaftarMagang() {
                   <tr key={peserta.id}>
                     <td className="py-2 px-4 border-b">{peserta.name}</td>
                     <td className="py-2 px-4 border-b">
-                      {peserta.University?.nim || "N/A"}
+                      {peserta.University.nim || "N/A"}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      {peserta.Profile?.nik || "N/A"}
+                      {peserta.Profile.nik || "N/A"}
                     </td>
                     <td className="py-2 px-4 border-b">{peserta.email}</td>
                     <td className="py-2 px-4 border-b">
-                      {peserta.Profile?.telp_user || "N/A"}
+                      {peserta.Profile.telp_user || "N/A"}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      {peserta.University?.univ_name || "N/A"}
+                      {peserta.University.univ_name || "N/A"}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      {peserta.University?.major || "N/A"}
+                      {peserta.University.major || "N/A"}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      {peserta.Regist?.available_space || "N/A"}
+                      {peserta.Regist.available_space || "N/A"}
                     </td>
                     <td className="py-2 px-4 border-b">
                       <a
-                        href={peserta.Regist?.recommend_letter || "#"}
+                        href={peserta.Regist.recommend_letter || "#"}
                         className="text-blue-500 hover:underline"
                       >
-                        {peserta.Regist?.recommend_letter
+                        {peserta.Regist.recommend_letter
                           ? "Lihat Surat"
                           : "Tidak tersedia"}
                       </a>
                     </td>
                     <td className="py-2 px-4 border-b">
                       <a
-                        href={peserta.Regist?.cv || "#"}
+                        href={peserta.Regist.cv || "#"}
                         className="text-blue-500 hover:underline"
                       >
-                        {peserta.Regist?.cv ? "Lihat CV" : "Tidak tersedia"}
+                        {peserta.Regist.cv ? "Lihat CV" : "Tidak tersedia"}
                       </a>
                     </td>
                     <td className="py-2 px-4 border-b">
                       <a
-                        href={peserta.Regist?.portofolio || "#"}
+                        href={peserta.Regist.portofolio || "#"}
                         className="text-blue-500 hover:underline"
                       >
-                        {peserta.Regist?.portofolio
+                        {peserta.Regist.portofolio
                           ? "Lihat Portofolio"
                           : "Tidak tersedia"}
                       </a>
                     </td>
                     <td className="py-2 px-4 border-b">
-                      {formatDate(peserta.Regist?.first_period)}
+                      {formatDate(peserta.Regist.first_period)}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      {formatDate(peserta.Regist?.last_period)}
+                      {formatDate(peserta.Regist.last_period)}
                     </td>
                     <td className="py-2 px-4 border-b">
                       {formatDate(peserta.tanggalPendaftaran)}
