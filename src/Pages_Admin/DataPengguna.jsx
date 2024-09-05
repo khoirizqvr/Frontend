@@ -16,6 +16,14 @@ const DataPengguna = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
+<<<<<<< HEAD
+        const response = await axios.get("http://localhost:5000/api/users", {
+          // const response = await axios.get("https://prajagamer-backend-64316396636.asia-southeast2.run.app/api/users", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+=======
         // const response = await axios.get("http://localhost:5000/api/users", {
         const response = await axios.get(
           "https://prajagamer-backend-64316396636.asia-southeast2.run.app/api/users",
@@ -25,6 +33,7 @@ const DataPengguna = () => {
             },
           }
         );
+>>>>>>> 5a82aadfb880375ff0763e1ba44349cf7312c407
         setPesertaData(response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -68,6 +77,12 @@ const DataPengguna = () => {
   const startIndex = (currentPage - 1) * PAGE_SIZE;
   const currentData = pesertaData.slice(startIndex, startIndex + PAGE_SIZE);
   const totalPages = Math.ceil(pesertaData.length / PAGE_SIZE);
+
+  const formatDate = (dateString) => {
+    const options = { day: "2-digit", month: "2-digit", year: "numeric" };
+    const date = new Date(dateString);
+    return date.toLocaleDateString("id-ID", options); // 'id-ID' untuk format tanggal Indonesia
+  };
 
   return (
     <div className="flex flex-col h-screen">
@@ -132,6 +147,16 @@ const DataPengguna = () => {
                         </td>
                         <td className="py-2 px-4 border-b">
                           {peserta.Profile.photo ? (
+<<<<<<< HEAD
+                            <a
+                              href={peserta.Profile.photo}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-500 hover:underline"
+                            >
+                              Lihat Foto
+                            </a>
+=======
                             <img
                               src={peserta.Profile.photo}
                               alt="Foto peserta"
@@ -140,6 +165,7 @@ const DataPengguna = () => {
                                 e.target.src = "/path/to/default-photo.jpg";
                               }} // Menampilkan foto default jika foto tidak bisa dimuat
                             />
+>>>>>>> 5a82aadfb880375ff0763e1ba44349cf7312c407
                           ) : (
                             "Foto tidak tersedia"
                           )}
@@ -174,15 +200,26 @@ const DataPengguna = () => {
                           )}
                         </td>
                         <td className="py-2 px-4 border-b">
+<<<<<<< HEAD
+                          {formatDate(peserta.createdAt)}
+                        </td>
+                        <td className="py-2 px-4 border-b">{peserta.status}</td>
+                        <td className="py-2 px-4 border-b flex flex-row w-72">
+=======
                           {peserta.createdAt}
                         </td>
                         <td className="py-2 px-4 border-b">{peserta.status}</td>
                         <td className="py-2 px-4 border-b">
+>>>>>>> 5a82aadfb880375ff0763e1ba44349cf7312c407
                           <button
                             onClick={() =>
                               handleStatusChange(peserta.id, "Verifying")
                             }
+<<<<<<< HEAD
+                            className="ml-2 px-4 py-2 w-full bg-green-500 text-white rounded hover:bg-green-600 hover:underline"
+=======
                             className="ml-2 text-green-500 hover:underline"
+>>>>>>> 5a82aadfb880375ff0763e1ba44349cf7312c407
                           >
                             Terima
                           </button>
@@ -190,7 +227,11 @@ const DataPengguna = () => {
                             onClick={() =>
                               handleStatusChange(peserta.id, "NotVerifying")
                             }
+<<<<<<< HEAD
+                            className="ml-2 px-4 py-2 w-full bg-red-500 text-white rounded hover:bg-red-600 hover:underline"
+=======
                             className="ml-2 text-red-500 hover:underline"
+>>>>>>> 5a82aadfb880375ff0763e1ba44349cf7312c407
                           >
                             Tolak
                           </button>

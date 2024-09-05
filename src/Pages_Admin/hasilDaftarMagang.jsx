@@ -1,72 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HeaderAdmin from "../ComponentsAdmin/HeaderAdmin";
 import * as XLSX from "xlsx";
 
 const PAGE_SIZE = 10;
 
 function HasilDaftarMagang() {
-  // Data peserta
-  const pesertaData = [
-    {
-      id: 1,
-      nama: "John Doe",
-      nim: "123456789",
-      nik: "9876543210123456",
-      email: "johndoe@example.com",
-      noTelp: "081234567890",
-      asalPendidikan: "Universitas A",
-      jurusan: "Teknik Informatika",
-      ketersediaanPenempatan: "Setuju",
-      suratRekomendasi: "Lihat File",
-      cv: "Lihat File",
-      portofolio: "Lihat File",
-      durasiAwal: "2024-09-01",
-      durasiAkhir: "2024-12-01",
-      menyetujuiSnK: "Iya",
-      tanggalPendaftaran: "2024-09-01",
-      statusLamaran: "Diterima",
-    },
-    {
-      id: 2,
-      nama: "Jane Smith",
-      nim: "987654321",
-      nik: "1234567890123456",
-      email: "janesmith@example.com",
-      noTelp: "081298765432",
-      asalPendidikan: "Universitas B",
-      jurusan: "Sistem Informasi",
-      ketersediaanPenempatan: "Tidak Setuju",
-      suratRekomendasi: "Lihat File",
-      cv: "Lihat File",
-      portofolio: "Lihat File",
-      durasiAwal: "2024-09-05",
-      durasiAkhir: "2024-12-05",
-      menyetujuiSnK: "Tidak",
-      tanggalPendaftaran: "2024-09-01",
-      statusLamaran: "Diproses",
-    },
-    {
-      id: 3,
-      nama: "Alice Johnson",
-      nim: "654321987",
-      nik: "5678901234567890",
-      email: "alicejohnson@example.com",
-      noTelp: "081376543210",
-      asalPendidikan: "Universitas C",
-      jurusan: "Manajemen Informatika",
-      ketersediaanPenempatan: "Setuju",
-      suratRekomendasi: "Lihat File",
-      cv: "Lihat File",
-      portofolio: "Lihat File",
-      durasiAwal: "2024-09-10",
-      durasiAkhir: "2024-12-10",
-      menyetujuiSnK: "Iya",
-      tanggalPendaftaran: "2024-09-01",
-      statusLamaran: "Ditolak",
-    },
-  ];
-
+  const [pesertaData, setPesertaData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+
+  // Get token from local storage
+  const getToken = () => localStorage.getItem("token");
+
+  const fetchPesertaData = async () => {
+    const token = getToken();
+    if (!token) {
+      console.warn("Token tidak ditemukan. Silakan login ulang.");
+      return;
+    }
+
+    try {
+      console.log("Fetching data...");
+      const response = await fetch("http://localhost:5000/api/users2", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // Log the status of the response
+      console.log("Response status:", response.status);
+
+      // Check if response is ok
+      if (response.ok) {
+        const data = await response.json();
+
+        // Log the fetched data
+        console.log("Fetched data:", data[0]);
+
+        if (data && data.applicantsList) {
+          setPesertaData(data.applicantsList);
+        } else {
+          console.warn(
+            "Data applicantsList tidak ditemukan dalam respons API."
+          );
+          setPesertaData([]); // Set empty array if data is not found
+        }
+      } else {
+        console.error("Failed to fetch data:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPesertaData();
+  }, []);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -79,9 +67,42 @@ function HasilDaftarMagang() {
     XLSX.writeFile(wb, "Data_Pelamar_Magang.xlsx");
   };
 
+  const updateUserStatus = async (userId, status) => {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/updateUserStatus2",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+          },
+          body: JSON.stringify({ userId, status }),
+        }
+      );
+      const result = await response.json();
+      if (response.ok) {
+        alert(`Status updated to ${status}`);
+        // Refresh data after update
+        fetchPesertaData();
+      } else {
+        alert(`Error: ${result.error}`);
+      }
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
+
   const startIndex = (currentPage - 1) * PAGE_SIZE;
   const currentData = pesertaData.slice(startIndex, startIndex + PAGE_SIZE);
   const totalPages = Math.ceil(pesertaData.length / PAGE_SIZE);
+
+  const formatDate = (dateString) => {
+    const options = { day: "2-digit", month: "2-digit", year: "numeric" };
+    return dateString
+      ? new Date(dateString).toLocaleDateString("id-ID", options)
+      : "N/A";
+  };
 
   return (
     <div className="flex flex-col h-screen bg-gray-100">
@@ -101,82 +122,98 @@ function HasilDaftarMagang() {
             <table className="min-w-full bg-white">
               <thead>
                 <tr>
-                  {[
-                    "Nama",
-                    "NIM",
-                    "NIK",
-                    "Email",
-                    "No. Telp",
-                    "Asal Pendidikan",
-                    "Jurusan",
-                    "Ketersediaan Penempatan",
-                    "Surat Rekomendasi",
-                    "Curriculum Vitae",
-                    "Link Portofolio",
-                    "Durasi Awal Magang",
-                    "Durasi Akhir Magang",
-                    "Menyetujui S&K",
-                    "Tanggal Pengajuan",
-                    "Status Lamaran",
-                    "Aksi",
-                  ].map((header) => (
-                    <th
-                      key={header}
-                      className="py-2 px-4 border-b text-left text-sm font-semibold text-gray-600"
-                    >
-                      {header}
-                    </th>
-                  ))}
+                  <th className="py-2 px-4 border-b">Nama</th>
+                  <th className="py-2 px-4 border-b">NIM</th>
+                  <th className="py-2 px-4 border-b">NIK</th>
+                  <th className="py-2 px-4 border-b">Email</th>
+                  <th className="py-2 px-4 border-b">No. Telp</th>
+                  <th className="py-2 px-4 border-b">Asal Pendidikan</th>
+                  <th className="py-2 px-4 border-b">Jurusan</th>
+                  <th className="py-2 px-4 border-b">
+                    Ketersediaan Penempatan
+                  </th>
+                  <th className="py-2 px-4 border-b">Surat Rekomendasi</th>
+                  <th className="py-2 px-4 border-b">Curriculum Vitae</th>
+                  <th className="py-2 px-4 border-b">Link Portofolio</th>
+                  <th className="py-2 px-4 border-b">Durasi Awal Magang</th>
+                  <th className="py-2 px-4 border-b">Durasi Akhir Magang</th>
+                  <th className="py-2 px-4 border-b">Tanggal Pengajuan</th>
+                  <th className="py-2 px-4 border-b">Status Lamaran</th>
+                  <th className="py-2 px-4 border-b">Aksi</th>
                 </tr>
               </thead>
               <tbody>
                 {currentData.map((peserta) => (
                   <tr key={peserta.id}>
-                    <td className="py-2 px-4 border-b">{peserta.nama}</td>
-                    <td className="py-2 px-4 border-b">{peserta.nim}</td>
-                    <td className="py-2 px-4 border-b">{peserta.nik}</td>
+                    <td className="py-2 px-4 border-b">{peserta.name}</td>
+                    <td className="py-2 px-4 border-b">
+                      {peserta.University?.nim || "N/A"}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      {peserta.Profile?.nik || "N/A"}
+                    </td>
                     <td className="py-2 px-4 border-b">{peserta.email}</td>
-                    <td className="py-2 px-4 border-b">{peserta.noTelp}</td>
                     <td className="py-2 px-4 border-b">
-                      {peserta.asalPendidikan}
-                    </td>
-                    <td className="py-2 px-4 border-b">{peserta.jurusan}</td>
-                    <td className="py-2 px-4 border-b">
-                      {peserta.ketersediaanPenempatan}
+                      {peserta.Profile?.telp_user || "N/A"}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      <a href="#" className="text-blue-500 hover:underline">
-                        {peserta.suratRekomendasi}
+                      {peserta.University?.univ_name || "N/A"}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      {peserta.University?.major || "N/A"}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      {peserta.Regist?.available_space || "N/A"}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      <a
+                        href={peserta.Regist?.recommend_letter || "#"}
+                        className="text-blue-500 hover:underline"
+                      >
+                        {peserta.Regist?.recommend_letter
+                          ? "Lihat Surat"
+                          : "Tidak tersedia"}
                       </a>
                     </td>
                     <td className="py-2 px-4 border-b">
-                      <a href="#" className="text-blue-500 hover:underline">
-                        {peserta.cv}
+                      <a
+                        href={peserta.Regist?.cv || "#"}
+                        className="text-blue-500 hover:underline"
+                      >
+                        {peserta.Regist?.cv ? "Lihat CV" : "Tidak tersedia"}
                       </a>
                     </td>
                     <td className="py-2 px-4 border-b">
-                      <a href="#" className="text-blue-500 hover:underline">
-                        {peserta.portofolio}
+                      <a
+                        href={peserta.Regist?.portofolio || "#"}
+                        className="text-blue-500 hover:underline"
+                      >
+                        {peserta.Regist?.portofolio
+                          ? "Lihat Portofolio"
+                          : "Tidak tersedia"}
                       </a>
                     </td>
-                    <td className="py-2 px-4 border-b">{peserta.durasiAwal}</td>
                     <td className="py-2 px-4 border-b">
-                      {peserta.durasiAkhir}
+                      {formatDate(peserta.Regist?.first_period)}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      {peserta.menyetujuiSnK}
+                      {formatDate(peserta.Regist?.last_period)}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      {peserta.tanggalPendaftaran}
+                      {formatDate(peserta.tanggalPendaftaran)}
                     </td>
+                    <td className="py-2 px-4 border-b">{peserta.status}</td>
                     <td className="py-2 px-4 border-b">
-                      {peserta.statusLamaran}
-                    </td>
-                    <td className="py-2 px-4 border-b">
-                      <button className="ml-2 text-green-500 hover:underline">
+                      <button
+                        className="ml-2 text-green-500 hover:underline"
+                        onClick={() => updateUserStatus(peserta.id, "Accepted")}
+                      >
                         Terima
                       </button>
-                      <button className="ml-2 text-red-500 hover:underline">
+                      <button
+                        className="ml-2 text-red-500 hover:underline"
+                        onClick={() => updateUserStatus(peserta.id, "Rejected")}
+                      >
                         Tolak
                       </button>
                     </td>
