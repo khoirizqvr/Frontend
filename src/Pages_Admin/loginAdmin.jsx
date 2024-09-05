@@ -14,7 +14,7 @@ const LoginAdmin = () => {
 
     try {
       // const response = await axios.post("http://localhost:5000/api/admin/login", {
-      const response = await axios.post("https://prajagamer-backend-64316396636.asia-southeast2.run.app/api/admin/login", {
+      const response = await axios.post("http://localhost:5000/api/admin/login", {
         email,
         password,
       });
