@@ -20,6 +20,7 @@ import UpdateInfo from "./Pages_Admin/updateInfo";
 import AkunAdmin from "./Pages_Admin/akunAdmin";
 import LoginAdmin from "./Pages_Admin/loginAdmin";
 import DataPengguna from "./Pages_Admin/DataPengguna";
+import EditProfilAdmin from "./Pages_Admin/EditProfilAdmin";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -86,6 +87,10 @@ export default function App() {
     {
       path: "datapengguna",
       element: <DataPengguna />,
+    },
+    {
+      path: "editprofiladmin",
+      element: <EditProfilAdmin />,
     },
   ]);
 

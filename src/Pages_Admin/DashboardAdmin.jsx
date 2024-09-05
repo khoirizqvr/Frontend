@@ -13,10 +13,9 @@ const DashboardAdmin = () => {
   useEffect(() => {
     const fetchData = async () => {
       const token = localStorage.getItem("token"); // Consistent token retrieval
-
       if (!token) {
         setError("Anda belum login. Silakan login terlebih dahulu.");
-        window.location.href = "/login"; // Redirect to login page if not logged in
+        window.location.href = "/loginadmin"; // Redirect to login page if not logged in
         return;
       }
 
@@ -42,7 +41,7 @@ const DashboardAdmin = () => {
         if (error.response && error.response.status === 401) {
           setError("Akses tidak diizinkan. Silakan login ulang.");
           localStorage.removeItem("token"); // Remove invalid token
-          window.location.href = "/login"; // Redirect to login page
+          window.location.href = "/loginadmin"; // Redirect to login page
         } else {
           setError("Data tidak dapat diambil");
         }
@@ -80,7 +79,7 @@ const DashboardAdmin = () => {
               </div>
             </div>
             <div className="mt-8 bg-white p-4 rounded shadow">
-              <h3 className="text-xl font-bold mb-4">Data Pendaftar</h3>
+              <h3 className="text-xl font-bold mb-4">Data Pelamar</h3>
               <div className="overflow-x-auto">
                 <table className="min-w-full bg-white">
                   <thead>

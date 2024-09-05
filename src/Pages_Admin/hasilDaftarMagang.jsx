@@ -86,9 +86,9 @@ function HasilDaftarMagang() {
   return (
     <div className="flex flex-col h-screen bg-gray-100">
       <HeaderAdmin className="relative z-20" />
-      <div className="ml-64 pt-16 p-6 mt-5">
+      <div className="flex-1 flex flex-col ml-64 pt-16 p-6 mt-10 bg-gray-100">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-bold">Data Pelamar Magang</h3>
+          <h3 className="text-xl font-bold">Data Pelamar</h3>
           <button
             onClick={handleExportToExcel}
             className="px-4 py-2 bg-blue-500 text-white rounded shadow hover:bg-blue-600"
@@ -96,7 +96,7 @@ function HasilDaftarMagang() {
             Export to Excel
           </button>
         </div>
-        <div className="mt-8 bg-white p-4 rounded shadow">
+        <div className="bg-white p-4 rounded shadow">
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white">
               <thead>
