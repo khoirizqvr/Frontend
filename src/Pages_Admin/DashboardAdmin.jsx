@@ -13,10 +13,9 @@ const DashboardAdmin = () => {
   useEffect(() => {
     const fetchData = async () => {
       const token = localStorage.getItem("token"); // Consistent token retrieval
-
       if (!token) {
         setError("Anda belum login. Silakan login terlebih dahulu.");
-        window.location.href = "/login"; // Redirect to login page if not logged in
+        window.location.href = "/loginadmin"; // Redirect to login page if not logged in
         return;
       }
 
