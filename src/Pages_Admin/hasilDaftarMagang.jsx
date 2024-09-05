@@ -34,10 +34,10 @@ function HasilDaftarMagang() {
         const data = await response.json();
 
         // Log the fetched data
-        console.log("Fetched data:", data[0]);
+        console.log("Fetched data:", data);
 
-        if (data && data.applicantsList) {
-          setPesertaData(data.applicantsList);
+        if (data) {
+          setPesertaData(data);
         } else {
           console.warn(
             "Data applicantsList tidak ditemukan dalam respons API."
@@ -94,8 +94,9 @@ function HasilDaftarMagang() {
   };
 
   const startIndex = (currentPage - 1) * PAGE_SIZE;
-  const currentData = pesertaData.slice(startIndex, startIndex + PAGE_SIZE);
+  const currentData = pesertaData;
   const totalPages = Math.ceil(pesertaData.length / PAGE_SIZE);
+  console.log("currentData", currentData)
 
   const formatDate = (dateString) => {
     const options = { day: "2-digit", month: "2-digit", year: "numeric" };
