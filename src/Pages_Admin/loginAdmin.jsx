@@ -20,8 +20,9 @@ const LoginAdmin = () => {
 
       // Handle success
       console.log("Login successful:", response.data);
-      // Store the token in local storage
+      // Store the token and admin name in local storage
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("adminName", response.data.adminName); // Assume `adminName` is returned by API
       // Redirect to admin dashboard
       window.location.href = "/admin"; // Make sure this matches your dashboard route
     } catch (err) {
