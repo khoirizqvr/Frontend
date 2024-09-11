@@ -3,34 +3,62 @@ import HeaderAdmin from "../ComponentsAdmin/HeaderAdmin";
 
 function UpdateInfo() {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [uploading, setUploading] = useState(false); // Tambahkan state untuk loading
 
+  // Get token from local storage
+  const getToken = () => localStorage.getItem("token");
+
+  // Handle file selection
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
 
+  // Handle file upload
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (selectedFile) {
-      const formData = new FormData();
-      formData.append('file', selectedFile);
 
-      try {
-        const response = await fetch('http://localhost:5000/api/banner', {
-          method: 'POST',
-          body: formData,
-        });
-
-        if (response.ok) {
-          alert('File uploaded successfully.');
-        } else {
-          alert('Failed to upload file.');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('An error occurred while uploading the file.');
-      }
-    } else {
+    // Check if file is selected
+    if (!selectedFile) {
       alert("Harap pilih file untuk diunggah.");
+      return;
+    }
+
+    // Create FormData
+    const formData = new FormData();
+    formData.append('banner', selectedFile); // Pastikan nama file sesuai dengan yang diterima server
+
+    try {
+      const token = getToken(); // Get token from local storage
+      if (!token) {
+        alert("Token tidak ditemukan. Silakan login kembali.");
+        return;
+      }
+
+      setUploading(true); // Set loading to true
+
+      const response = await fetch('http://localhost:5000/api/banner', {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`, // Attach Authorization header with Bearer token
+        },
+        body: formData, // Send FormData with the file
+      });
+
+      // Cek status response
+      if (response.ok) {
+        const result = await response.json();
+        alert('File uploaded successfully.');
+        console.log('Upload response:', result);
+      } else {
+        const errorMessage = await response.text();
+        console.error('Error uploading file:', errorMessage);
+        alert('Failed to upload file. ' + errorMessage);
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      alert('An error occurred while uploading the file.');
+    } finally {
+      setUploading(false); // Reset loading state
     }
   };
 
@@ -64,9 +92,10 @@ function UpdateInfo() {
           )}
           <button
             type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            className={`bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ${uploading ? 'cursor-not-allowed opacity-50' : ''}`}
+            disabled={uploading}
           >
-            Unggah
+            {uploading ? 'Uploading...' : 'Unggah'}
           </button>
         </form>
       </div>
