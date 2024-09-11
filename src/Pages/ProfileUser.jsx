@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ProfileBackground from "../assets/Pictures/userprofile.svg";
-import Photoprofile from "../assets/Pictures/logodisdukcapil.png";
 import Navbar from "../Components/navbar";
 import Footer from "../Components/Footer";
+import { getDataProfil } from "../redux/Action/profileAction";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(getDataProfil());
+  }, []);
+
+  const dataProfil = useSelector((state) => state.profil.dataProfilUser);
+  // console.log("data profile", dataProfil);
+
   return (
     <div className="bg-[#D24545] min-h-screen flex flex-col">
       <Navbar />
-      <div className="w-[1100px] mx-auto bg-[#f6f6f6] rounded-2xl mt-32 mb-10 pb-6">        
+      <div className="w-[1100px] mx-auto bg-[#f6f6f6] rounded-2xl mt-32 mb-10 pb-6">
         <div className="relative">
           <img
             src={ProfileBackground}
@@ -21,7 +33,7 @@ const ProfilePage = () => {
           >
             <img
               className="w-60 rounded-full"
-              src={Photoprofile}
+              src={dataProfil?.photo}
               alt="Profile"
             />
           </div>
@@ -32,10 +44,8 @@ const ProfilePage = () => {
           className="absolute"
           style={{ transform: "translate(320px, 25px)" }}
         >
-          <h1 className="text-2xl font-semibold">
-            Virnika Shefira Gina Morissa
-          </h1>
-          <p className="text-gray-500">Universitas Dian Nuswantoro</p>
+          <h1 className="text-2xl font-semibold">{dataProfil?.name}</h1>
+          <p className="text-gray-500">{dataProfil?.university}</p>
         </div>
 
         {/* Main Content */}
@@ -48,13 +58,11 @@ const ProfilePage = () => {
               <div className="border rounded p-4 bg-gray-100">
                 <div className="mb-2">
                   <label>Email</label>
-                  <p className="font-semibold block">
-                    Syaifulrizal504@gmail.com
-                  </p>
+                  <p className="font-semibold block">{dataProfil?.email}</p>
                 </div>
                 <div className="mb-2">
                   <label>No. Telp</label>
-                  <p className="font-semibold block">0856-4340-8961</p>
+                  <p className="font-semibold block">{dataProfil?.telp}</p>
                 </div>
               </div>
             </div>
@@ -69,11 +77,11 @@ const ProfilePage = () => {
                 <div className="flex justify-between mb-2">
                   <div className="w-1/2">
                     <label>Nomor Induk Mahasiswa</label>
-                    <p className="font-semibold">A11.2021.13849</p>
+                    <p className="font-semibold">{dataProfil?.nim}</p>
                   </div>
                   <div className="w-1/2">
                     <label>Nomor Induk Kependudukan</label>
-                    <p className="font-semibold">3374093010010001</p>
+                    <p className="font-semibold">{dataProfil?.nik}</p>
                   </div>
                 </div>
 
@@ -81,11 +89,19 @@ const ProfilePage = () => {
                 <div className="flex justify-between mb-2">
                   <div className="w-1/2">
                     <label>Tempat Lahir</label>
-                    <p className="font-semibold">-</p>
+                    {dataProfil?.place_birth? (
+                      <p className="font-semibold">{dataProfil?.place_birth}</p>
+                    ) : (
+                      <p className="font-semibold">-</p>
+                    )}
                   </div>
                   <div className="w-1/2">
                     <label>Tanggal Lahir</label>
-                    <p className="font-semibold">-</p>
+                    {dataProfil?.birth_date? (
+                      <p className="font-semibold">{dataProfil?.birth_date}</p>
+                    ) : (
+                      <p className="font-semibold">-</p>
+                    )}
                   </div>
                 </div>
 
@@ -94,35 +110,71 @@ const ProfilePage = () => {
                 <div className="flex justify-between mb-2">
                   <div className="w-1/2">
                     <label>Provinsi</label>
-                    <p className="font-semibold">-</p>
+                    {dataProfil?.province_domicile? (
+                      <p className="font-semibold">
+                        {dataProfil?.province_domicile}
+                      </p>
+                    ) : (
+                      <p className="font-semibold">-</p>
+                    )}
                   </div>
                   <div className="w-1/2">
                     <label>Kota/Kab</label>
-                    <p className="font-semibold">-</p>
+                    {dataProfil?.city_domicile? (
+                      <p className="font-semibold">
+                        {dataProfil?.city_domicile}
+                      </p>
+                    ) : (
+                      <p className="font-semibold">-</p>
+                    )}
                   </div>
                 </div>
                 <div className="w-1/2 mb-2">
                   <label>Alamat Domisili</label>
-                  <p className="font-semibold">-</p>
+                  {dataProfil?.address_domicile? (
+                      <p className="font-semibold">
+                        {dataProfil?.address_domicile}
+                      </p>
+                    ) : (
+                      <p className="font-semibold">-</p>
+                    )}
                 </div>
 
-                {/* Alamat Domisili KTP */}   
+                {/* Alamat Domisili KTP */}
                 <div className="mb-2">
                   <p className="font-semibold block">Alamat Domisili KTP</p>
                 </div>
                 <div className="flex justify-between mb-2">
                   <div className="w-1/2">
                     <label>Provinsi</label>
-                    <p className="font-semibold">-</p>
+                    {dataProfil?.province_ktp? (
+                      <p className="font-semibold">
+                        {dataProfil?.province_ktp}
+                      </p>
+                    ) : (
+                      <p className="font-semibold">-</p>
+                    )}
                   </div>
                   <div className="w-1/2">
                     <label>Kota/Kab</label>
-                    <p className="font-semibold">-</p>
+                    {dataProfil?.city_ktp? (
+                      <p className="font-semibold">
+                        {dataProfil?.city_ktp}
+                      </p>
+                    ) : (
+                      <p className="font-semibold">-</p>
+                    )}
                   </div>
                 </div>
                 <div className="w-1/2 mb-2">
                   <label>Alamat Domisili</label>
-                  <p className="font-semibold">-</p>
+                  {dataProfil?.address_ktp? (
+                      <p className="font-semibold">
+                        {dataProfil?.address_ktp}
+                      </p>
+                    ) : (
+                      <p className="font-semibold">-</p>
+                    )}
                 </div>
               </div>
             </div>
@@ -137,20 +189,32 @@ const ProfilePage = () => {
                 <div className="mb-2">
                   <label>Asal Universitas</label>
                   <p className="font-semibold block">
-                    Universitas Dian Nuswantoro
+                    {dataProfil?.university}
                   </p>
                 </div>
                 <div className="mb-2">
                   <label>Jurusan</label>
-                  <p className="font-semibold block">Teknik Informatika</p>
+                  <p className="font-semibold block">{dataProfil?.major}</p>
                 </div>
                 <div className="mb-2">
                   <label>IPK</label>
-                  <p className="font-semibold block">-</p>
+                  {dataProfil?.ipk? (
+                      <p className="font-semibold">
+                        {dataProfil?.ipk}
+                      </p>
+                    ) : (
+                      <p className="font-semibold">-</p>
+                    )}
                 </div>
                 <div className="mb-2">
                   <label>Semester Yang Sedang di Tempuh</label>
-                  <p className="font-semibold block">-</p>
+                  {dataProfil?.semester? (
+                      <p className="font-semibold">
+                        {dataProfil?.semester}
+                      </p>
+                    ) : (
+                      <p className="font-semibold">-</p>
+                    )}
                 </div>
               </div>
             </div>
@@ -161,22 +225,43 @@ const ProfilePage = () => {
               <div className="border rounded p-4 bg-gray-100">
                 <div className="mb-2">
                   <label>Nama Pembimbing</label>
-                  <p className="font-semibold block">-</p>
+                  {dataProfil?.name_supervisor? (
+                      <p className="font-semibold">
+                        {dataProfil?.name_supervisor}
+                      </p>
+                    ) : (
+                      <p className="font-semibold">-</p>
+                    )}
                 </div>
                 <div className="mb-2">
                   <label>No. Telp Pembimbing</label>
-                  <p className="font-semibold block">-</p>
+                  {dataProfil?.telp_supervisor? (
+                      <p className="font-semibold">
+                        {dataProfil?.telp_supervisor}
+                      </p>
+                    ) : (
+                      <p className="font-semibold">-</p>
+                    )}
                 </div>
                 <div className="mb-2">
                   <label>Email Pembimbing</label>
-                  <p className="font-semibold block">-</p>
+                  {dataProfil?.email_supervisor? (
+                      <p className="font-semibold">
+                        {dataProfil?.email_supervisor}
+                      </p>
+                    ) : (
+                      <p className="font-semibold">-</p>
+                    )}
                 </div>
               </div>
             </div>
 
             {/* Update Button */}
             <div className="flex justify-center mt-3  mb-6">
-              <button className="bg-red-600 w-full h-14 text-white font-semibold px-6 py-2 rounded-lg hover:bg-red-700">
+              <button
+                className="bg-red-600 w-full h-14 text-white font-semibold px-6 py-2 rounded-lg hover:bg-red-700"
+                onClick={() => navigate("/editprofile")}
+              >
                 Update Profile
               </button>
             </div>

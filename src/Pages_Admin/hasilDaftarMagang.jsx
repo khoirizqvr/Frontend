@@ -34,10 +34,10 @@ function HasilDaftarMagang() {
         const data = await response.json();
 
         // Log the fetched data
-        console.log("Fetched data:", data[0]);
+        console.log("Fetched data:", data);
 
-        if (data && data.applicantsList) {
-          setPesertaData(data.applicantsList);
+        if (data) {
+          setPesertaData(data);
         } else {
           console.warn(
             "Data applicantsList tidak ditemukan dalam respons API."
@@ -94,8 +94,9 @@ function HasilDaftarMagang() {
   };
 
   const startIndex = (currentPage - 1) * PAGE_SIZE;
-  const currentData = pesertaData.slice(startIndex, startIndex + PAGE_SIZE);
+  const currentData = pesertaData;
   const totalPages = Math.ceil(pesertaData.length / PAGE_SIZE);
+  console.log("currentData", currentData);
 
   const formatDate = (dateString) => {
     const options = { day: "2-digit", month: "2-digit", year: "numeric" };
@@ -147,71 +148,71 @@ function HasilDaftarMagang() {
                   <tr key={peserta.id}>
                     <td className="py-2 px-4 border-b">{peserta.name}</td>
                     <td className="py-2 px-4 border-b">
-                      {peserta.University?.nim || "N/A"}
+                      {peserta.University.nim || "N/A"}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      {peserta.Profile?.nik || "N/A"}
+                      {peserta.Profile.nik || "N/A"}
                     </td>
                     <td className="py-2 px-4 border-b">{peserta.email}</td>
                     <td className="py-2 px-4 border-b">
-                      {peserta.Profile?.telp_user || "N/A"}
+                      {peserta.Profile.telp_user || "N/A"}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      {peserta.University?.univ_name || "N/A"}
+                      {peserta.University.univ_name || "N/A"}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      {peserta.University?.major || "N/A"}
+                      {peserta.University.major || "N/A"}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      {peserta.Regist?.available_space || "N/A"}
+                      {peserta.Regist.available_space || "N/A"}
                     </td>
                     <td className="py-2 px-4 border-b">
                       <a
-                        href={peserta.Regist?.recommend_letter || "#"}
+                        href={peserta.Regist.recommend_letter || "#"}
                         className="text-blue-500 hover:underline"
                       >
-                        {peserta.Regist?.recommend_letter
+                        {peserta.Regist.recommend_letter
                           ? "Lihat Surat"
                           : "Tidak tersedia"}
                       </a>
                     </td>
                     <td className="py-2 px-4 border-b">
                       <a
-                        href={peserta.Regist?.cv || "#"}
+                        href={peserta.Regist.cv || "#"}
                         className="text-blue-500 hover:underline"
                       >
-                        {peserta.Regist?.cv ? "Lihat CV" : "Tidak tersedia"}
+                        {peserta.Regist.cv ? "Lihat CV" : "Tidak tersedia"}
                       </a>
                     </td>
                     <td className="py-2 px-4 border-b">
                       <a
-                        href={peserta.Regist?.portofolio || "#"}
+                        href={peserta.Regist.portofolio || "#"}
                         className="text-blue-500 hover:underline"
                       >
-                        {peserta.Regist?.portofolio
+                        {peserta.Regist.portofolio
                           ? "Lihat Portofolio"
                           : "Tidak tersedia"}
                       </a>
                     </td>
                     <td className="py-2 px-4 border-b">
-                      {formatDate(peserta.Regist?.first_period)}
+                      {formatDate(peserta.Regist.first_period)}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      {formatDate(peserta.Regist?.last_period)}
+                      {formatDate(peserta.Regist.last_period)}
                     </td>
                     <td className="py-2 px-4 border-b">
                       {formatDate(peserta.tanggalPendaftaran)}
                     </td>
                     <td className="py-2 px-4 border-b">{peserta.status}</td>
-                    <td className="py-2 px-4 border-b">
+                    <td className="py-2 px-4 border-b flex flex-row w-72">
                       <button
-                        className="ml-2 text-green-500 hover:underline"
+                        className="ml-2 px-4 py-2 w-full bg-green-500 text-white rounded hover:bg-green-600 hover:underline"
                         onClick={() => updateUserStatus(peserta.id, "Accepted")}
                       >
                         Terima
                       </button>
                       <button
-                        className="ml-2 text-red-500 hover:underline"
+                        className="ml-2 px-4 py-2 w-full bg-red-500 text-white rounded hover:bg-red-600 hover:underline"
                         onClick={() => updateUserStatus(peserta.id, "Rejected")}
                       >
                         Tolak

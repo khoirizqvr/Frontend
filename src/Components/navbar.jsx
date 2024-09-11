@@ -12,7 +12,7 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const token = useSelector((state) => state.auth.token);
-  console.log("token",token)
+  // console.log("token",token)
   const user = useSelector((state) => state.auth.user);
 
   const isActive = (path) => location.pathname === path;

@@ -6,31 +6,40 @@ import Profile from "../assets/Pictures/logodisdukcapil.png";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getDataProfil, postUpdateProfil } from "../redux/Action/profileAction";
 
 const EditProfilePage = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getDataProfil);
+  });
+  const dataEditProfile = useSelector((state) => state.profil.dataProfilUser);
+  console.log("data", dataEditProfile);
+
   const [formData, setFormData] = useState({
-    nama: "Virnika Shefira Gina Morissa",
-    universitas: "Universitas Dian Nuswantoro",
-    email: "Syaifulrizal504@gmail.com",
-    noTelp: "0856-4340-8961",
-    nim: "A11.2021.13849",
-    nik: "3374093010010001",
-    tempatLahir: "",
-    tanggalLahir: "",
-    kotaDomisili: "",
-    alamatDomisili: "",
-    kotaKTP: "",
-    alamatKTP: "",
-    jurusan: "Teknik Informatika",
-    ipk: "",
-    semester: "",
-    namaPembimbing: "",
-    noTelpPembimbing: "",
-    emailPembimbing: "",
-    fotoProfil: null,
-    croppedImage: null,
+    nama: dataEditProfile.name,
+    universitas: dataEditProfile.university,
+    email: dataEditProfile.email,
+    noTelp: dataEditProfile.telp,
+    nim: dataEditProfile.nim,
+    nik: dataEditProfile.nik,
+    tempatLahir: dataEditProfile.place_birth,
+    tanggalLahir: dataEditProfile.birth_date,
+    kotaDomisili: dataEditProfile.city_domicile,
+    alamatDomisili: dataEditProfile.address_domicile,
+    kotaKTP: dataEditProfile.city_ktp,
+    alamatKTP: dataEditProfile.address_ktp,
+    jurusan: dataEditProfile.major,
+    ipk: dataEditProfile.ipk,
+    semester: dataEditProfile.semester,
+    namaPembimbing: dataEditProfile.name_supervisor,
+    noTelpPembimbing: dataEditProfile.telp_supervisor,
+    emailPembimbing: dataEditProfile.email_supervisor,
+    fotoProfil: dataEditProfile.photo,
+    provinsiDomisili: dataEditProfile.province_domicile,
+    provinsiKTP: dataEditProfile.province_ktp,
   });
 
   const [provinsiList, setProvinsiList] = useState([]);
@@ -166,28 +175,45 @@ const EditProfilePage = () => {
 
   const handleCancelCrop = () => {
     setShowCropper(false);
-    setFormData({ ...formData, fotoProfil: null, croppedImage: null });
+    setFormData({ ...formData, fotoProfil: null });
   };
 
   const handleCrop = () => {
     if (cropper && typeof cropper.getCroppedCanvas === "function") {
       const croppedCanvas = cropper.getCroppedCanvas();
       if (croppedCanvas) {
-        const croppedImage = croppedCanvas.toDataURL();
-        setFormData({ ...formData, croppedImage });
+        const fotoProfil = croppedCanvas.toDataURL();
+        setFormData({ ...formData, fotoProfil });
         setShowCropper(false);
       }
     }
   };
 
   const handleSubmit = (e) => {
+    let data = {
+      ipk: formData.ipk,
+      semester: formData.semester,
+      place_birth: formData.tempatLahir,
+      birth_date: formData.tanggalLahir,
+      address_domicile: formData.alamatDomisili,
+      address_ktp: formData.alamatKTP,
+      name_supervisor: formData.namaPembimbing,
+      telp_supervisor: formData.noTelpPembimbing,
+      email_supervisor: formData.emailPembimbing,
+      province_domicile: formData.provinsiDomisili,
+      city_domicile: formData.kotaDomisili,
+      province_ktp: formData.provinsiKTP,
+      city_ktp: formData.kotaKTP,
+    };
     e.preventDefault();
-    console.log(formData);
+    console.log("Data Handle Submit", data);
+    dispatch(postUpdateProfil(data, navigate));
   };
 
-  const imageUrl = formData.fotoProfil
-    ? URL.createObjectURL(formData.fotoProfil)
-    : Profile;
+  const imageUrl =
+    formData.fotoProfil instanceof File
+      ? URL.createObjectURL(formData.fotoProfil)
+      : Profile;
 
   return (
     <div className="bg-[#D24545] min-h-screen flex flex-col">
@@ -200,7 +226,7 @@ const EditProfilePage = () => {
           <div className="flex my-8 gap-4">
             <div className="relative justify-center mx-16">
               <img
-                src={formData.croppedImage || imageUrl}
+                src={formData.fotoProfil || imageUrl}
                 alt="Foto Profil"
                 className="w-[300px] object-cover rounded-full"
               />
@@ -285,7 +311,7 @@ const EditProfilePage = () => {
                 <label className="block mb-2">Nama Lengkap</label>
                 <input
                   type="text"
-                  name="nim"
+                  name="nama"
                   value={formData.nama}
                   onChange={handleChange}
                   className="w-full border rounded px-3 py-2"
@@ -308,7 +334,7 @@ const EditProfilePage = () => {
                 <label className="block mb-2">Nomor Induk Mahasiswa</label>
                 <input
                   type="text"
-                  name="nik"
+                  name="nim"
                   value={formData.nim}
                   onChange={handleChange}
                   className="w-full border rounded px-3 py-2"
@@ -437,7 +463,7 @@ const EditProfilePage = () => {
                 <div className="mt-2">
                   <label className="block mb-2">Alamat KTP</label>
                   <textarea
-                    name="alamatDomisili"
+                    name="alamatKTP"
                     value={formData.alamatKTP}
                     onChange={handleChange}
                     className="w-full border rounded px-3 py-2"

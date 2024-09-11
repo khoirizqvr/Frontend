@@ -3,10 +3,14 @@ import { thunk } from "redux-thunk";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import loginReducers from "./Reducers/loginReducers"
+import loginReducers from "./Reducers/loginReducers";
+import pendaftaranMagangReducers from "./Reducers/pendaftaranMagangReducers";
+import profileReducers from "./Reducers/profileReducers";
 
 const rootReducer = combineReducers({
-  auth: loginReducers
+  auth: loginReducers,
+  pendaftaran: pendaftaranMagangReducers,
+  profil: profileReducers
 });
 
 const persistConfig = {

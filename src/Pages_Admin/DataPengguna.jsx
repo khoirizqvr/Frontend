@@ -16,24 +16,12 @@ const DataPengguna = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-<<<<<<< HEAD
         const response = await axios.get("http://localhost:5000/api/users", {
           // const response = await axios.get("https://prajagamer-backend-64316396636.asia-southeast2.run.app/api/users", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-=======
-        // const response = await axios.get("http://localhost:5000/api/users", {
-        const response = await axios.get(
-          "https://prajagamer-backend-64316396636.asia-southeast2.run.app/api/users",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
->>>>>>> 5a82aadfb880375ff0763e1ba44349cf7312c407
         setPesertaData(response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -147,7 +135,6 @@ const DataPengguna = () => {
                         </td>
                         <td className="py-2 px-4 border-b">
                           {peserta.Profile.photo ? (
-<<<<<<< HEAD
                             <a
                               href={peserta.Profile.photo}
                               target="_blank"
@@ -156,16 +143,6 @@ const DataPengguna = () => {
                             >
                               Lihat Foto
                             </a>
-=======
-                            <img
-                              src={peserta.Profile.photo}
-                              alt="Foto peserta"
-                              className="w-16 h-16 object-cover rounded-full"
-                              onError={(e) => {
-                                e.target.src = "/path/to/default-photo.jpg";
-                              }} // Menampilkan foto default jika foto tidak bisa dimuat
-                            />
->>>>>>> 5a82aadfb880375ff0763e1ba44349cf7312c407
                           ) : (
                             "Foto tidak tersedia"
                           )}
@@ -200,26 +177,15 @@ const DataPengguna = () => {
                           )}
                         </td>
                         <td className="py-2 px-4 border-b">
-<<<<<<< HEAD
                           {formatDate(peserta.createdAt)}
                         </td>
                         <td className="py-2 px-4 border-b">{peserta.status}</td>
                         <td className="py-2 px-4 border-b flex flex-row w-72">
-=======
-                          {peserta.createdAt}
-                        </td>
-                        <td className="py-2 px-4 border-b">{peserta.status}</td>
-                        <td className="py-2 px-4 border-b">
->>>>>>> 5a82aadfb880375ff0763e1ba44349cf7312c407
                           <button
                             onClick={() =>
                               handleStatusChange(peserta.id, "Verifying")
                             }
-<<<<<<< HEAD
                             className="ml-2 px-4 py-2 w-full bg-green-500 text-white rounded hover:bg-green-600 hover:underline"
-=======
-                            className="ml-2 text-green-500 hover:underline"
->>>>>>> 5a82aadfb880375ff0763e1ba44349cf7312c407
                           >
                             Terima
                           </button>
@@ -227,11 +193,7 @@ const DataPengguna = () => {
                             onClick={() =>
                               handleStatusChange(peserta.id, "NotVerifying")
                             }
-<<<<<<< HEAD
                             className="ml-2 px-4 py-2 w-full bg-red-500 text-white rounded hover:bg-red-600 hover:underline"
-=======
-                            className="ml-2 text-red-500 hover:underline"
->>>>>>> 5a82aadfb880375ff0763e1ba44349cf7312c407
                           >
                             Tolak
                           </button>
