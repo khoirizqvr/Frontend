@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Header from "../ComponentsAdmin/HeaderAdmin";
-import Profile from "../assets/Pictures/Profile.png";
+import Profile from "../assets/Pictures/userprofile.svg";
 import "cropperjs/dist/cropper.css";
 
 const EditProfilAdmin = () => {

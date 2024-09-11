@@ -1,11 +1,13 @@
 import "./App.css";
 import React from "react";
+import { Provider } from "react-redux"; // Tambahkan import ini
+import { store } from "./redux/store"; // Pastikan sudah mengimpor store
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import Beranda from "./Pages/Beranda";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import "./index.css";
-import InfoMitra from "./Pages/infoMitra";
+import InfoMitra from "./Pages/InfoMitra";
 import FormPendaftaran1 from "./Pages/FormPendaftaran1";
 import FormPendaftaran2 from "./Pages/FormPendaftaran2";
 import DaftarMagang from "./Pages/DaftarMagang";
@@ -18,7 +20,7 @@ import UpdateInfo from "./Pages_Admin/updateInfo";
 import AkunAdmin from "./Pages_Admin/akunAdmin";
 import LoginAdmin from "./Pages_Admin/loginAdmin";
 import DataPengguna from "./Pages_Admin/DataPengguna";
-
+import EditProfilAdmin from "./Pages_Admin/EditProfilAdmin";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -38,7 +40,6 @@ export default function App() {
       path: "mitra",
       element: <InfoMitra />,
     },
-
     {
       path: "daftarmagang",
       element: <DaftarMagang />,
@@ -87,11 +88,15 @@ export default function App() {
       path: "datapengguna",
       element: <DataPengguna />,
     },
+    {
+      path: "editprofiladmin",
+      element: <EditProfilAdmin />,
+    },
   ]);
 
   return (
-    <>
+    <Provider store={store}>
       <RouterProvider router={router} />
-    </>
+    </Provider>
   );
 }

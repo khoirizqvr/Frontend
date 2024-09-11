@@ -1,9 +1,17 @@
 import React, { useState } from "react";
-import { HomeIcon, MinusIcon, MoonIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
+import { 
+  HomeIcon, 
+  UsersIcon, 
+  ClipboardDocumentCheckIcon, 
+  DocumentArrowUpIcon, 
+  UserCircleIcon, 
+  Bars3Icon, 
+  XMarkIcon 
+} from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
 
 const SidebarAdmin = () => {
-  const navigate = useNavigate();   
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -37,28 +45,28 @@ const SidebarAdmin = () => {
           onClick={() => navigate("/datapengguna")}
           className="flex items-center px-3 py-3 hover:bg-red-700"
         >
-          <MinusIcon className="h-6 w-6 mr-3" />
+          <UsersIcon className="h-6 w-6 mr-3" />
           Data Pengguna
         </button>
         <button
           onClick={() => navigate("/hasildaftarmagang")}
           className="flex items-center px-3 py-3 hover:bg-red-700"
         >
-          <MinusIcon className="h-6 w-6 mr-3" />
+          <ClipboardDocumentCheckIcon className="h-6 w-6 mr-3" />
           Data Pelamar
         </button>
         <button
           onClick={() => navigate("/updateinfo")}
           className="flex items-center px-3 py-3 hover:bg-red-700"
         >
-          <MinusIcon className="h-6 w-6 mr-3" />
+          <DocumentArrowUpIcon className="h-6 w-6 mr-3" />
           Upload Informasi
         </button>
         <button
           onClick={() => navigate("/adminakun")}
           className="flex items-center px-3 py-3 hover:bg-red-700"
         >
-          <MoonIcon className="h-6 w-6 mr-3" />
+          <UserCircleIcon className="h-6 w-6 mr-3" />
           Akun Admin
         </button>
       </div>

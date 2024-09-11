@@ -17,9 +17,13 @@ const authSlicer = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
     },
+    logout: (state) => {
+      state.token = null;
+      state.user = null; // Hapus user juga jika diperlukan
+    },
   },
 });
 
-export const { setToken, setUser } = authSlicer.actions;
+export const { setToken, setUser, logout } = authSlicer.actions;
 
 export default authSlicer.reducer;

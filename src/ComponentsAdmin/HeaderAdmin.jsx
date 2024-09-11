@@ -1,13 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { UserCircleIcon } from "@heroicons/react/24/outline"; // Menggunakan icon orang
 import Logo from "../assets/Pictures/logodisdukcapil.png";
 import SidebarAdmin from "./SidebarAdmin";
 
 const HeaderAdmin = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [adminName, setAdminName] = useState("");
+
+  useEffect(() => {
+    // Get admin name from localStorage
+    const name = localStorage.getItem("adminName");
+    if (name) {
+      setAdminName(name);
+    }
+  }, []);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("adminName");
+    window.location.href = "/loginadmin"; // Redirect to login page
   };
 
   return (
@@ -29,7 +44,7 @@ const HeaderAdmin = () => {
           onClick={toggleDropdown}
           className="flex items-center focus:outline-none"
         >
-          <span className="text-gray-600 mr-3 sm:text-sm">superadmin1</span>
+          <span className="text-gray-600 mr-3 sm:text-sm">{adminName || "Admin"}</span>
           <UserCircleIcon className="h-10 w-10 text-gray-500 sm:h-8 sm:w-8" />
         </button>
 
@@ -43,7 +58,7 @@ const HeaderAdmin = () => {
               Akun
             </button>
             <button
-              onClick={() => console.log("Logout clicked")}
+              onClick={handleLogout}
               className="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left"
             >
               Logout

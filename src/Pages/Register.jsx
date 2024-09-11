@@ -56,6 +56,7 @@ const Register = () => {
     formDataToSend.append("photo", formData.photo);
     formDataToSend.append("cv", formData.cv);
     formDataToSend.append("score_list", formData.score_list);
+    console.log("response1",formDataToSend)
   
     try {
       const response = await axios.post('http://localhost:5000/api/user/register', formDataToSend, {
@@ -65,6 +66,7 @@ const Register = () => {
       });
   
       if (response.status === 201) {
+        console.log("response", response)
         alert("Registrasi berhasil!");
         navigate("/login");
       }
@@ -112,6 +114,22 @@ const Register = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Input Section - Left Side */}
               <div className="flex flex-col space-y-4">
+             {/* NIK */}
+             <div className="mb-4">
+                  <label htmlFor="nik" className="block text-gray-700 text-left">
+                    NIK
+                  </label>
+                  <input
+                    type="text"
+                    id="nik"
+                    name="nik"
+                    value={formData.nik}
+                    onChange={handleChange}
+                    className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]"
+                    placeholder="NIK"
+                  />
+                </div>
+            
                 {/* Nama Lengkap */}
                 <div className="mb-4">
                   <label
@@ -147,21 +165,7 @@ const Register = () => {
                   />
                 </div>
 
-                {/* NIK */}
-                <div className="mb-4">
-                  <label htmlFor="nik" className="block text-gray-700 text-left">
-                    NIK
-                  </label>
-                  <input
-                    type="text"
-                    id="nik"
-                    name="nik"
-                    value={formData.nik}
-                    onChange={handleChange}
-                    className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]"
-                    placeholder="NIK"
-                  />
-                </div>
+               
 
                 {/* Password */}
                 <div className="mb-4 relative">
@@ -340,7 +344,7 @@ const Register = () => {
               </div>
             </div>
 
-            <button type="submit" className="py-3 px-10 bg-yellow-300">
+            <button type="submit" className="py-3 px-10 bg-[#D24545] text-white font-semibold rounded-lg">
               Simpan
             </button>
 
@@ -362,8 +366,7 @@ const Register = () => {
         {/* Footer Section */}
         <div className="text-center w-full bg-gradient-to-t from-red-500 to-red-700 text-white py-6 relative z-10 rounded-t-3xl flex justify-center items-center">
           <p className="text-sm">
-            © 2023 Disdukcapil. All rights reserved. Created by PT.Lentera Bangsa
-            Benderang
+            © 2023 Disdukcapil. All rights reserved
           </p>
         </div>
       </div>

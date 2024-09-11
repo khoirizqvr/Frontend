@@ -3,36 +3,26 @@ import Photo from "../assets/Pictures/disdukcapil.png";
 import Logo from "../assets/Pictures/logodisdukcapil.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import {login} from "../redux/Action/authAction"
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await axios.post("http://localhost:5000/api/user/login", { email, password });
-      const { token, user } = response.data;
-
-      // Simpan token di localStorage atau sessionStorage
-      localStorage.setItem("token", token);
-      
-      // Arahkan pengguna ke halaman setelah login
-      navigate("/");
-
-    } catch (error) {
-      // Tangani error login
-      setError(error.response?.data?.error || "Login failed. Please try again.");
-    }
+    let data = { email, password };
+    dispatch(login(data, navigate));
   };
 
   return (
     <div className="flex h-screen w-screen">
-         {/* Bagian Gambar untuk Desktop */}
-         <div
+      {/* Bagian Gambar untuk Desktop */}
+      <div
         className="hidden lg:flex lg:w-3/4 h-full bg-cover bg-center"
         style={{ backgroundImage: `url(${Photo})` }}
       >
