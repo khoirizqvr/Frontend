@@ -97,6 +97,7 @@ function HasilDaftarMagang() {
   const currentData = pesertaData;
   const totalPages = Math.ceil(pesertaData.length / PAGE_SIZE);
   console.log("currentData", currentData);
+  console.log("currentData", currentData)
 
   const formatDate = (dateString) => {
     const options = { day: "2-digit", month: "2-digit", year: "numeric" };
