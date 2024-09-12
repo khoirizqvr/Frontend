@@ -10,9 +10,18 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const token = useSelector((state) => state.auth.token);
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  });
+  
   useEffect(() => {
     dispatch(getDataProfil());
   }, []);
+
+ 
 
   const dataProfil = useSelector((state) => state.profil.dataProfilUser);
   // console.log("data profile", dataProfil);
