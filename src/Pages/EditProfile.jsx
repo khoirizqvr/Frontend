@@ -204,6 +204,8 @@ const EditProfilePage = () => {
       city_domicile: formData.kotaDomisili,
       province_ktp: formData.provinsiKTP,
       city_ktp: formData.kotaKTP,
+      // photo: formData.fotoProfil,
+      // major: formData.jurusan,
     };
     e.preventDefault();
     console.log("Data Handle Submit", data);

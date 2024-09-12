@@ -45,7 +45,7 @@ const DaftarMagang = () => {
           </p>
           <div className="justify-center md:mt-16 mt-16">
             <button
-              className="px-10 py-4 lg:px-20 lg:py-6 bg-white text-red-600 rounded-lg text-2xl font-semibold shadow-md hover:bg-gray-200 transition"
+              className="px-10 py-4 lg:px-20 bg-white text-red-600 rounded-lg text-2xl font-semibold shadow-md hover:bg-gray-200 transition"
               onClick={handleButtonClick}
             >
               Daftar Magang

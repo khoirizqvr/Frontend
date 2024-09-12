@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import Photo from "../assets/Pictures/disdukcapil.png";
 import Logo from "../assets/Pictures/logodisdukcapil.png";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 import { useDispatch } from "react-redux";
-import {login} from "../redux/Action/authAction"
+import { login } from "../redux/Action/authAction";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [nik, setNik] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -15,8 +16,12 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    let data = { email, password };
+    let data = { nik, password };
     dispatch(login(data, navigate));
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword); // Toggle the state
   };
 
   return (
@@ -62,20 +67,22 @@ const Login = () => {
 
           <form onSubmit={handleLogin}>
             <div className="mb-4">
-              <label htmlFor="email" className="block text-gray-700 text-left">
-                Email
+              <label htmlFor="nik" className="block text-gray-700 text-left">
+                Nomor Induk Kependudukan
               </label>
               <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                id="nik"
+                value={nik}
+                onChange={(e) => setNik(e.target.value)}
                 className="w-full p-3 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]"
-                placeholder="Email"
+                placeholder="NIK"
                 required
               />
             </div>
-            <div className="mb-6">
+
+            {/* Password Input */}
+            <div className="mb-6 relative">
               <label
                 htmlFor="password"
                 className="block text-gray-700 text-left"
@@ -83,25 +90,31 @@ const Login = () => {
                 Password
               </label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-3 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]"
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545] pr-12"
                 placeholder="Password"
                 required
               />
-              <a
-                href="#"
-                className="text-sm text-[#D24545] hover:underline float-right mt-2 mb-12"
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 pt-5"
               >
-                Lupa Password?
-              </a>
+                {showPassword ? (
+                  <EyeSlashIcon className="w-5 h-5" />
+                ) : (
+                  <EyeIcon className="w-5 h-5" />
+                )}
+              </button>
             </div>
             <button className="w-full p-3 bg-[#D24545] text-white font-bold rounded-lg hover:bg-red-700 transition">
               Masuk
             </button>
           </form>
+
           <p className="mt-6 text-center text-gray-600">
             Belum punya akun?{" "}
             <button

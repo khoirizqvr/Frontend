@@ -35,7 +35,7 @@ const Beranda = () => {
             Dinas Kependudukan dan Pencacatan Sipil Kota Semarang{" "}
           </div>
           <button
-            className="mt-10 lg:mt-20 bg-white text-[#D24545] py-2 px-20 max-sm:text-xl text-2xl font-semibold rounded-xl border-[#D24545] shadow-xl"
+            className="mt-10 lg:mt-20 bg-white text-[#D24545] py-4 px-20 max-sm:text-xl text-2xl font-semibold rounded-xl border-[#D24545] shadow-xl"
             onClick={() => navigate("/daftarmagang")}
           >
             Daftar Magang
