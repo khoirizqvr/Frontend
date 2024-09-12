@@ -1,5 +1,8 @@
 import axios from "axios";
-import { setDataFormPendaftaran, setPendaf } from "../Reducers/pendaftaranMagangReducers";
+import {
+  setDataFormPendaftaran,
+  setPendaf,
+} from "../Reducers/pendaftaranMagangReducers";
 
 export const getDataPendaftaran = () => async (dispatch, getState) => {
   try {
@@ -32,13 +35,35 @@ export const getDataPendaftaran = () => async (dispatch, getState) => {
 };
 
 export const postPendaftaranMagang =
-  (data, navigate) => async (dispatch, getState) => {
-    console.log("form Data Form", data)
+  (formData, navigate) => async (dispatch, getState) => {
+    console.log("form Data Form", formData);
+
     try {
-      // console.log("Starting fetch data profil"); // Debug log
+      // Get token from the Redux state
+      const token = getState().auth.token;
+      console.log("Token from state:", token); // Debug log
+
+      // Create FormData instance
+      const data = new FormData();
+
+      // Append form data
+      data.append("available_space", formData.available_space);
+      data.append("first_period", formData.first_period);
+      data.append("last_period", formData.last_period);
+
+      // Append files if they exist
+      if (formData.recommend_letter) {
+        data.append("recommend_letter", formData.recommend_letter);
+      }
+      if (formData.portofolio) {
+        data.append("portofolio", formData.portofolio);
+      }
+      if (formData.cv) {
+        data.append("cv", formData.cv);
+      }
 
       // Get token from the Redux state (assuming it's stored in state.auth.token)
-      const token = getState().auth.token;
+
       console.log("Token from state:", token); // Debug log
 
       // Set Authorization header with the token
@@ -51,10 +76,11 @@ export const postPendaftaranMagang =
           },
         }
       );
+      console.log("response postPendaftaranMagang", response);
 
       // Check for successful response
       if (response.status === 200) {
-         console.log("Data profile login:", response.data); // Debug log
+        console.log("Data profile login:", response.data); // Debug log
         dispatch(setDataFormPendaftaran(response.data));
         navigate("/");
       }
