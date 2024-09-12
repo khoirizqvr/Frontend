@@ -21,6 +21,7 @@ const Register = () => {
     score_list: null,
   });
   const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
 
   // Handle form data changes
   const handleChange = (e) => {
@@ -40,10 +41,97 @@ const Register = () => {
     });
   };
 
+  const validate = () => {
+    let errors = {};
+
+    const {
+      nik,
+      namaLengkap,
+      nim,
+      password,
+      email,
+      noTelp,
+      asalUniversitas,
+      jurusan,
+      photo,
+      cv,
+      score_list,
+    } = formData;
+
+    // Validasi NIK
+    if (!nik) {
+      errors.nik = "NIK harus diisi.";
+    } else if (!/^\d{16}$/.test(nik)) {
+      errors.nik = "NIK harus terdiri dari 16 angka.";
+    }
+
+    // Validasi Nama Lengkap
+    if (!namaLengkap) {
+      errors.namaLengkap = "Nama lengkap harus diisi.";
+    } else if (!/^[A-Za-z\s]+$/.test(namaLengkap)) {
+      errors.namaLengkap = "Nama hanya boleh terdiri dari huruf dan spasi.";
+    }
+
+    // Validasi NIM
+    if (!nim) {
+      errors.nim = "NIM harus diisi.";
+    }
+
+    // Validasi Password
+    if (!password) {
+      errors.password = "Password harus diisi.";
+    } else if (!/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
+      errors.password =
+        "Password terdiri minimal 8 karakter, 1 huruf kapital dan 1 angka.";
+    }
+
+    // Validasi Email
+    if (!email) {
+      errors.email = "Email harus diisi.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.email = "Format email tidak valid.";
+    }
+
+    // Validasi Nomor Telepon
+    if (!noTelp) {
+      errors.noTelp = "Nomor telepon harus diisi.";
+    } else if (!/^\d+$/.test(noTelp)) {
+      errors.noTelp = "Nomor telepon hanya boleh terdiri dari angka.";
+    }
+
+    // Validasi Asal Universitas
+    if (!asalUniversitas) {
+      errors.asalUniversitas = "Asal Universitas harus diisi.";
+    }
+
+    // Validasi Jurusan
+    if (!jurusan) {
+      errors.jurusan = "Jurusan harus diisi.";
+    }
+
+    // Validasi Foto
+    if (!photo) {
+      errors.photo = "Foto harus diunggah.";
+    }
+
+    // Validasi CV
+    if (!cv) {
+      errors.cv = "CV harus diunggah.";
+    }
+
+    // Validasi Transkip Nilai
+    if (!score_list) {
+      errors.score_list = "Transkip Nilai harus diunggah.";
+    }
+
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const formDataToSend = new FormData();
     formDataToSend.append("name", formData.namaLengkap);
     formDataToSend.append("nim", formData.nim);
@@ -56,23 +144,29 @@ const Register = () => {
     formDataToSend.append("photo", formData.photo);
     formDataToSend.append("cv", formData.cv);
     formDataToSend.append("score_list", formData.score_list);
-    console.log("response1",formDataToSend)
-  
-    try {
-      const response = await axios.post('http://localhost:5000/api/user/register', formDataToSend, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-  
-      if (response.status === 201) {
-        console.log("response", response)
-        alert("Registrasi berhasil!");
-        navigate("/login");
+    console.log("response1", formDataToSend);
+
+    if (validate()) {
+      try {
+        const response = await axios.post(
+          "http://localhost:5000/api/user/register",
+          formDataToSend,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        if (response.status === 201) {
+          console.log("response", response);
+          alert("Registrasi berhasil!");
+          navigate("/login");
+        }
+      } catch (error) {
+        console.error("Error during registration:", error);
+        alert("Registrasi gagal. Silakan coba lagi.");
       }
-    } catch (error) {
-      console.error("Error during registration:", error);
-      alert("Registrasi gagal. Silakan coba lagi.");
     }
   };
 
@@ -114,9 +208,12 @@ const Register = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Input Section - Left Side */}
               <div className="flex flex-col space-y-4">
-             {/* NIK */}
-             <div className="mb-4">
-                  <label htmlFor="nik" className="block text-gray-700 text-left">
+                {/* NIK */}
+                <div className="mb-4">
+                  <label
+                    htmlFor="nik"
+                    className="block text-gray-700 text-left"
+                  >
                     NIK
                   </label>
                   <input
@@ -125,11 +222,19 @@ const Register = () => {
                     name="nik"
                     value={formData.nik}
                     onChange={handleChange}
-                    className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]"
+                    className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]
+                      ${errors.nik ? "border-red-500" : "border-gray-300"}`}
                     placeholder="NIK"
                   />
+                  <div className="min-h-[24px]">
+                    {errors.nik && (
+                      <span className="text-red-500 text-sm mt-[-8px]">
+                        {errors.nik}
+                      </span>
+                    )}
+                  </div>
                 </div>
-            
+
                 {/* Nama Lengkap */}
                 <div className="mb-4">
                   <label
@@ -144,14 +249,29 @@ const Register = () => {
                     name="namaLengkap"
                     value={formData.namaLengkap}
                     onChange={handleChange}
-                    className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]"
+                    className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]
+                      ${
+                        errors.namaLengkap
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }`}
                     placeholder="Nama Lengkap"
                   />
+                  <div className="min-h-[24px]">
+                    {errors.namaLengkap && (
+                      <span className="text-red-500 text-sm mt-[-8px]">
+                        {errors.namaLengkap}
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 {/* NIM */}
                 <div className="mb-4">
-                  <label htmlFor="nim" className="block text-gray-700 text-left">
+                  <label
+                    htmlFor="nim"
+                    className="block text-gray-700 text-left"
+                  >
                     NIM
                   </label>
                   <input
@@ -160,12 +280,18 @@ const Register = () => {
                     name="nim"
                     value={formData.nim}
                     onChange={handleChange}
-                    className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]"
+                    className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]
+                      ${errors.nim ? "border-red-500" : "border-gray-300"}`}
                     placeholder="NIM"
                   />
+                  <div className="min-h-[24px]">
+                    {errors.nim && (
+                      <span className="text-red-500 text-sm mt-[-8px]">
+                        {errors.nim}
+                      </span>
+                    )}
+                  </div>
                 </div>
-
-               
 
                 {/* Password */}
                 <div className="mb-4 relative">
@@ -182,9 +308,19 @@ const Register = () => {
                       name="password"
                       value={formData.password}
                       onChange={handleChange}
-                      className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545] pr-12"
+                      className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545] pr-12
+                        ${
+                          errors.password ? "border-red-500" : "border-gray-300"
+                        }`}
                       placeholder="Password"
                     />
+                    <div className="min-h-[24px]">
+                      {errors.password && (
+                        <span className="text-red-500 text-sm mt-[-8px]">
+                          {errors.password}
+                        </span>
+                      )}
+                    </div>
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
@@ -204,7 +340,10 @@ const Register = () => {
               <div className="flex flex-col space-y-4">
                 {/* Email */}
                 <div className="mb-4">
-                  <label htmlFor="email" className="block text-gray-700 text-left">
+                  <label
+                    htmlFor="email"
+                    className="block text-gray-700 text-left"
+                  >
                     Email
                   </label>
                   <input
@@ -213,14 +352,26 @@ const Register = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]"
-                    placeholder="Email"
+                    className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545] "
+                    placeholder="Email ${
+                      errors.email ? "border-red-500" : "border-gray-300"
+                    }`}
                   />
+                  <div className="min-h-[24px]">
+                    {errors.email && (
+                      <span className="text-red-500 text-sm mt-[-8px]">
+                        {errors.email}
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 {/* No. Telp */}
                 <div className="mb-4">
-                  <label htmlFor="noTelp" className="block text-gray-700 text-left">
+                  <label
+                    htmlFor="noTelp"
+                    className="block text-gray-700 text-left"
+                  >
                     No. Telp
                   </label>
                   <input
@@ -229,9 +380,17 @@ const Register = () => {
                     name="noTelp"
                     value={formData.noTelp}
                     onChange={handleChange}
-                    className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]"
+                    className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]
+                      ${errors.noTelp ? "border-red-500" : "border-gray-300"}`}
                     placeholder="No. Telp"
                   />
+                  <div className="min-h-[24px]">
+                    {errors.noTelp && (
+                      <span className="text-red-500 text-sm mt-[-8px]">
+                        {errors.noTelp}
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 {/* Asal Universitas */}
@@ -248,14 +407,29 @@ const Register = () => {
                     name="asalUniversitas"
                     value={formData.asalUniversitas}
                     onChange={handleChange}
-                    className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]"
+                    className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]
+                      ${
+                        errors.asalUniversitas
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }`}
                     placeholder="Asal Universitas"
                   />
+                  <div className="min-h-[24px]">
+                    {errors.asalUniversitas && (
+                      <span className="text-red-500 text-sm mt-[-8px]">
+                        {errors.asalUniversitas}
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 {/* Jurusan */}
                 <div className="mb-4">
-                  <label htmlFor="jurusan" className="block text-gray-700 text-left">
+                  <label
+                    htmlFor="jurusan"
+                    className="block text-gray-700 text-left"
+                  >
                     Jurusan
                   </label>
                   <input
@@ -264,9 +438,17 @@ const Register = () => {
                     name="jurusan"
                     value={formData.jurusan}
                     onChange={handleChange}
-                    className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]"
+                    className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]
+                      ${errors.jurusan ? "border-red-500" : "border-gray-300"}`}
                     placeholder="Jurusan"
                   />
+                  <div className="min-h-[24px]">
+                    {errors.jurusan && (
+                      <span className="text-red-500 text-sm mt-[-8px]">
+                        {errors.jurusan}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -293,6 +475,11 @@ const Register = () => {
                 <p className="text-gray-400 text-xs mt-2">
                   Unggah dalam format JPG atau PNG dengan ukuran maksimal 5 MB.
                 </p>
+                {errors.photo && (
+                  <span className="text-red-500 text-sm mt-1">
+                    {errors.photo}
+                  </span>
+                )}
               </div>
 
               {/* Upload CV */}
@@ -315,6 +502,9 @@ const Register = () => {
                 <p className="text-gray-400 text-xs mt-2">
                   Unggah dalam format PDF dengan ukuran maksimal 5 MB.
                 </p>
+                {errors.cv && (
+                  <span className="text-red-500 text-sm mt-1">{errors.cv}</span>
+                )}
               </div>
 
               {/* Upload Transkrip Nilai */}
@@ -341,10 +531,18 @@ const Register = () => {
                 <p className="text-gray-400 text-xs mt-2">
                   Unggah dalam format PDF dengan ukuran maksimal 5 MB.
                 </p>
+                {errors.score_list && (
+                  <span className="text-red-500 text-sm mt-1">
+                    {errors.score_list}
+                  </span>
+                )}
               </div>
             </div>
 
-            <button type="submit" className="py-3 px-10 bg-[#D24545] text-white font-semibold rounded-lg">
+            <button
+              type="submit"
+              className="py-3 px-10 bg-[#D24545] text-white font-semibold rounded-lg"
+            >
               Simpan
             </button>
 
@@ -365,9 +563,7 @@ const Register = () => {
 
         {/* Footer Section */}
         <div className="text-center w-full bg-gradient-to-t from-red-500 to-red-700 text-white py-6 relative z-10 rounded-t-3xl flex justify-center items-center">
-          <p className="text-sm">
-            © 2023 Disdukcapil. All rights reserved
-          </p>
+          <p className="text-sm">© 2023 Disdukcapil. All rights reserved</p>
         </div>
       </div>
     </div>

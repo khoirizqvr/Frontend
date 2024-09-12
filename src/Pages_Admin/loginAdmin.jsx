@@ -7,44 +7,71 @@ import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid"; // Import ico
 const LoginAdmin = () => {
   const [nip, setNip] = useState("");
   const [password, setPassword] = useState("");
+  const [nipError, setNipError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
   const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(""); // Reset error message
+    let hasError = false;
+
+    if (!nip || nip.trim() === "") {
+      setNipError("NIP tidak boleh kosong");
+      hasError = true;
+    }
+
+    if (!password || password.trim() === "") {
+      setPasswordError("Password tidak boleh kosong");
+      hasError = true;
+    }
+    if (hasError) return;
 
     try {
       // Login request
-      const loginResponse = await axios.post("http://localhost:5000/api/admin/login", {
-        nip,
-        password,
-      });
+      const loginResponse = await axios.post(
+        "http://localhost:5000/api/admin/login",
+        {
+          nip,
+          password,
+        }
+      );
 
       // Simpan token ke local storage
       const token = loginResponse.data.token;
       localStorage.setItem("token", token);
 
       // Setelah login, fetch data admin berdasarkan email
-      const adminResponse = await axios.get("http://localhost:5000/api/admins", {
-        headers: {
-          Authorization: `Bearer ${token}`, // Gunakan token untuk authorization
-        },
-        params: { nip }, // Kirim email sebagai parameter
-      });
+      const adminResponse = await axios.get(
+        "http://localhost:5000/api/admins",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Gunakan token untuk authorization
+          },
+          params: { nip }, // Kirim email sebagai parameter
+        }
+      );
 
       // Logging respons API admin
       console.log("Admin Response Data:", adminResponse.data);
 
       // Simpan adminName ke local storage
-      const adminName = adminResponse.data.adminName || adminResponse.data.name || "Admin";
+      const adminName =
+        adminResponse.data.adminName || adminResponse.data.name || "Admin";
       localStorage.setItem("adminName", adminName);
 
       // Redirect ke dashboard admin
       window.location.href = "/admin";
     } catch (err) {
-      console.error("Login failed:", err.response ? err.response.data : err.message);
-      setError(err.response ? err.response.data.error : "An error occurred during login.");
+      console.error(
+        "Login failed:",
+        err.response ? err.response.data : err.message
+      );
+      setError(
+        err.response
+          ? err.response.data.error
+          : "An error occurred during login."
+      );
     }
   };
 
@@ -63,7 +90,10 @@ const LoginAdmin = () => {
       </div>
 
       {/* Bagian Formulir */}
-      <div className="relative flex lg:hidden w-full h-screen bg-cover bg-center" style={{ backgroundImage: `url(${Photo})` }}>
+      <div
+        className="relative flex lg:hidden w-full h-screen bg-cover bg-center"
+        style={{ backgroundImage: `url(${Photo})` }}
+      >
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
       </div>
 
@@ -86,7 +116,7 @@ const LoginAdmin = () => {
           {/* Error Message */}
           {error && <p className="text-red-500 text-left">{error}</p>}
 
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleLogin} noValidate>
             <div className="mb-4">
               <label htmlFor="nip" className="block text-gray-700 text-left">
                 NIP
@@ -94,22 +124,30 @@ const LoginAdmin = () => {
               <input
                 type="text"
                 id="nip"
-                className="w-full p-3 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]"
+                className={`w-full p-3 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545]
+                  ${nipError ? "border-red-500" : "border-gray-300"}`}
                 placeholder="NIP"
                 value={nip}
                 onChange={(e) => setNip(e.target.value)}
                 required
               />
+              {nipError && (
+                <p className="text-red-500 text-sm mt-[5px]">{nipError}</p>
+              )}
             </div>
             <div className="mb-6 relative">
-              <label htmlFor="password" className="block text-gray-700 text-left">
+              <label
+                htmlFor="password"
+                className="block text-gray-700 text-left"
+              >
                 Password
               </label>
               <div className="relative w-full">
                 <input
                   type={showPassword ? "text" : "password"} // Show password as text if showPassword is true
                   id="password"
-                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545] pr-12"
+                  className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D24545] pr-12
+                    ${passwordError ? "border-red-500" : "border-gray-300"}`}
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -127,9 +165,15 @@ const LoginAdmin = () => {
                     <EyeIcon className="w-5 h-5" /> // Icon when password is hidden
                   )}
                 </button>
+                <div className="absolute -bottom-6 text-red-500 text-sm">
+                  {passwordError && <p>{passwordError}</p>}
+                </div>
               </div>
             </div>
-            <button type="submit" className="w-full p-3 bg-[#D24545] text-white font-bold rounded-lg hover:bg-red-700 transition">
+            <button
+              type="submit"
+              className="w-full p-3 bg-[#D24545] text-white font-bold rounded-lg hover:bg-red-700 transition mt-4"
+            >
               Masuk
             </button>
           </form>
