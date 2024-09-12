@@ -10,28 +10,12 @@ function InfoPendaftaran() {
   const [loading, setLoading] = useState(true); // State untuk loading status
   const [error, setError] = useState(null); // State untuk menangani error
 
-  // Fungsi untuk mengambil token dari local storage
-  const getToken = () => {
-    return localStorage.getItem("token");
-  };
-
-  // Fetch banner Info Oprec dari API
+  // Fetch banner Info Oprec dari API atau menggunakan gambar fallback
   useEffect(() => {
     const fetchBanner = async () => {
-      const token = getToken(); // Ambil token dari local storage
-      if (!token) {
-        console.error("Token tidak ditemukan. Pastikan Anda sudah login.");
-        setError("Token tidak ditemukan. Pastikan Anda sudah login.");
-        setLoading(false);
-        return;
-      }
-
       try {
         const response = await fetch(`http://localhost:5000/api/banner?nameBanner=Lowongan`, {
           method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`, // Sertakan token di header
-          },
         });
 
         if (response.ok) {
